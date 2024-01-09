@@ -6,6 +6,10 @@ import KhoaHocTheoDanhMuc from "./pages/KhoaHocTheoDanhMuc/KhoaHocTheoDanhMuc";
 import Login from "./pages/LoginPage/Login";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import Page404 from "./pages/404Page/Page404";
+import AdminTemplate from "./templates/adminTemplate/AdminTemplate";
+import Tabs from "./templates/adminTemplate/Tabs";
+import QuanLiNguoiDung from "./templates/adminTemplate/QuanLiNguoiDung";
+import QuanLiKhoaHoc from "./templates/adminTemplate/QuanLiKhoaHoc";
 
 function App() {
   return (
@@ -15,6 +19,11 @@ function App() {
           <Route element={<HomePage/>} index/>
           <Route element={<ChiTietKhoaHoc/>} path="chitietkhoahoc/:maKhoaHoc"/>
           <Route element={<KhoaHocTheoDanhMuc/>} path="khoaHocTheoDanhMuc/:maDanhMuc"/>
+        </Route>
+        <Route element={<AdminTemplate/>} path="/admin">
+          <Route element={<Tabs/>} index/>
+          <Route element={<QuanLiNguoiDung/>} path="quanlinguoidung"/>
+          <Route element={<QuanLiKhoaHoc/>} path="quanlikhoahoc"/>
         </Route>
         <Route element={<Login/>} path="login"/>
         <Route element={<RegisterPage/>} path="register"/>
