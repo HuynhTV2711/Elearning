@@ -1,0 +1,34 @@
+.login{
+    .login_title{
+        @include textStyle($fs_38, $fw_700 ,$accent_color);
+        margin-top: 75px;
+        text-align: center;
+    }
+    .login_container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .login_btn{
+        display: inline-block;
+        margin: 15px 0;
+        padding: 10px 20px;
+        background-color: $accent_color;
+        border-radius: 5px;
+        text-decoration: none;
+        @include textStyle($fs_18, $fw_500 , $secondary_color);
+    }
+    .login_btn:hover{
+        cursor: pointer;
+        opacity: 0.8;
+        transition: all 0.5s;
+    }
+    p{
+        a{
+            color: $accent_color;
+        }
+        a:hover{
+            cursor: pointer;
+        }
+    }
+}

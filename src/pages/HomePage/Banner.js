@@ -26,24 +26,24 @@ const Banner = () => {
         />
       </div>
       <div className="carousel-inner">
-        <div className="carousel-item active vh-100">
+        <div className="carousel-item active">
           <img
-            src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            className="d-block h-100 w-100 object-fit-cover"
+            src="./image/banner/data-science-machine-learning.png"
+            className="d-block img-fluid"
             alt="..."
           />
         </div>
-        <div className="carousel-item vh-100">
+        <div className="carousel-item">
           <img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            className="d-block h-100 w-100 object-fit-cover"
+            src="./image/banner/291-thiet-ke-noi-that.png"
+            className="d-block img-fluid"
             alt="..."
           />
         </div>
-        <div className="carousel-item vh-100">
+        <div className="carousel-item">
           <img
-            src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            className="d-block h-100 w-100 object-fit-cover"
+            src="./image/banner/chuyen-vien-thiet-ke-291.png"
+            className="d-block img-fluid"
             alt="..."
           />
         </div>

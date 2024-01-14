@@ -1,0 +1,32 @@
+header{
+    background-color: $primary_color;
+    font-weight: $fw_500;
+    .navbar{
+        padding: 0px !important;
+    }
+    .navbar-brand, .nav-link {
+        color: $secondary_color;
+    }
+   
+    .dropdown-menu{
+        background-color: $secondary_color;
+    }
+    .nav-item{
+        padding: 10px 5px;
+        :hover{
+            color: $accent_color;
+            transition: all 1s !important;
+        }
+    }
+    .navbar-toggler{
+        color:$secondary_color;
+        border: 0.5px solid $color_bg_gray;
+        :focus{
+            box-shadow: none !important;
+        }
+    }   
+    .logo{
+        cursor: pointer;
+    }
+             
+}

@@ -14,9 +14,11 @@ const Login = () => {
         },
     };
     return (
-        <div className="container mt-5">
-            <h1 className='text-center'>Đăng nhập</h1>
-            <div className='row mt-5'>
+        <div className="login">
+            <h1 className='login_title'>Đăng nhập</h1>
+
+        <div className="container">
+            <div className='row login_container'>
                 <div className='col-6 col-12 col-md-12 col-lg-6'>
                     <Lottie options={defaultOptions} height={400} width={400} />
                 </div>
@@ -44,12 +46,13 @@ const Login = () => {
                                 placeholder=""
                             />
                         </div>
-                        <button className=' btn btn-primary'>Đăng nhập</button>
+                        <a className=' login_btn'>Đăng nhập</a>
                     </form>
-                    <p>Nếu chưa có tài khoản vui lòng đăng ký</p>
-                    <a className='btn btn-primary' onClick={() => { navigate(`/register`) }}>Đăng ký</a>
+                    <p>Nếu chưa có tài khoản vui lòng <a onClick={() => { navigate(`/register`) }}>đăng ký.</a> </p>
+                    {/* <a className='login_btn' onClick={() => { navigate(`/register`) }}>Đăng ký</a> */}
                 </div>
             </div>
+        </div>
         </div>
 
     )

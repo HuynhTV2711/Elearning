@@ -15,11 +15,11 @@ const Header = () => {
     });
   },[])
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <header>
+      <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a className="navbar-brand" onClick={() => { navigate(`/`) }} >
-            Navbar
+          <a className="navbar-brand logo" onClick={() => { navigate(`/`) }} >
+            Cyber
           </a>
           <button
             className="navbar-toggler"
@@ -30,20 +30,16 @@ const Header = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" />
+            <i class="fa-solid fa-caret-down"></i>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="#">
-                  Home
+                  Lịch khai giảng
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
+              
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -65,11 +61,21 @@ const Header = () => {
                 </ul>
               </li>
               <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">
-                  Disabled
+                <a className="nav-link" href="#">
+                  Dịch vụ
                 </a>
               </li>
-              <li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Tin tức
+                </a>
+                </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Liện hệ
+                </a>
+              </li>
+              <li className="nav-item">
               <form className="d-flex" role="search">
               <input
                 className="form-control me-2"
@@ -83,18 +89,19 @@ const Header = () => {
             </form>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-            <button className="btn btn-outline-success" onClick={() => { navigate(`login`) }}>
+            <div className="d-flex">
+            
+            <a className="btn btn-outline-success" onClick={() => { navigate(`login`) }}>
                 Login
-              </button>
+              </a>
               <button className="btn btn-outline-success" onClick={() => { navigate(`register`) }}>
                 Đăng ký
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 

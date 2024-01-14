@@ -1,0 +1,20 @@
+.thong_ke{
+    text-align: center;
+    padding: 50px 0;
+    h4{
+        @include textStyle($fs_22, $fw_700 , $primary_color);
+        margin-bottom: 30px;
+
+    }
+    img{
+        width: 150px;
+        height: 110px;
+    }
+    .number{
+        @include textStyle($fs_40, $fw_500 , $blue_dark);
+    }
+    .text{
+        @include textStyle($fs_16, $fw_700 , $primary_color);
+
+    }
+}

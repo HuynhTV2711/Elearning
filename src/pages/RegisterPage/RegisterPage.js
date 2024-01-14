@@ -13,12 +13,14 @@ const RegisterPage = () => {
     },
   };
   return (
-    <div className="container mt-5">
-            <h1 className='text-center'>Đăng ký</h1>
-      <div className="row mt-5">
+    <div className="register">
+
+    <div className="container">
+            <h1 className='register_title'>Đăng ký</h1>
+      <div className="row register_container">
         <div className="col-12 col-md-12 col-lg-6">
           <form>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Tài khoản
               </label>
@@ -31,7 +33,7 @@ const RegisterPage = () => {
                 placeholder=""
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Mật khẩu
               </label>
@@ -44,7 +46,7 @@ const RegisterPage = () => {
                 placeholder=""
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Họ tên
               </label>
@@ -57,7 +59,7 @@ const RegisterPage = () => {
                 placeholder=""
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Số điện thoại
               </label>
@@ -70,11 +72,11 @@ const RegisterPage = () => {
                 placeholder=""
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Mã nhóm
               </label>
-              <select class="form-select form-select-lg" name="" id="">
+              <select class="form-select form-select-lg py-1" name="" id="">
                 <option selected>Chọn nhóm</option>
                 <option value="GP01">GP01</option>
                 <option value="GP02">GP02</option>
@@ -88,7 +90,7 @@ const RegisterPage = () => {
               </select>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="" class="form-label">
                 Email
               </label>
@@ -101,7 +103,7 @@ const RegisterPage = () => {
                 placeholder=""
               />
             </div>
-            <button className=" btn btn-primary">Đăng ký</button>
+            <a className="register_btn">Đăng ký</a>
           </form>
         </div>
         <div className="col-12 col-md-12 col-lg-6 d-md-none d-none d-lg-block">
@@ -109,6 +111,8 @@ const RegisterPage = () => {
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 

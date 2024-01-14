@@ -1,0 +1,28 @@
+.ds_giang_vien{
+    background-color: #FAFAFA;
+    text-align: center;
+    padding: 50px 0;
+    .title{
+        @include textStyle($fs_38, $fw_700 ,$accent_color)
+    }
+    .sub_title{
+        @include textStyle($fs_16, $fw_300, $text_color)
+    }
+    .row{
+        margin-top: 50px;
+        img{
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: blue 0px 2px 8px 0px;
+            margin-bottom: 20px;
+        }
+        .name{
+        @include textStyle($fs_20, $fw_700, $blue_dark)
+        }
+        .course{
+            color:  gray;
+        }
+    }
+}

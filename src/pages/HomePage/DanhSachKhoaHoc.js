@@ -16,18 +16,26 @@ const DanhSachKhoaHoc = () => {
             });
     }, []);
     return (
+        <div className="danh_sach_khoa_hoc">
         <div className="container">
-            <h2 className="text-center">Danh sách khóa học</h2>
-            <div className="row g-5 ">
+            <h2 className="text-center title">Danh sách khóa học</h2>
+            <div className="row course_container">
                 {danhSachKhoaHoc?.map((item, index) => {
                     return (
-                        <div className="col-lg-3 col-sm-4 col-12">
-                            <div className="card" style={{ width: "18rem", height: "20rem" }}>
-                                <img src={item.hinhAnh} className="card-img-top" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.tenKhoaHoc}</h5>
-                                    <p className="card-text">{item.moTa}</p>
-                                    <a className="btn btn-primary" onClick={() => { navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`) }}>
+                        <div className="col-lg-4 col-sm-6 col-12">
+                            <div className=" course_item">
+                                <img src={item.hinhAnh} className="img_item" alt={item.tenKhoaHoc} />
+                                <div className="course-body">
+                                    <h5 className="course_title">{item.tenKhoaHoc}</h5>
+                                    {/* <p className="card-text">{item.moTa}</p> */}
+                                    <hr/>
+                                </div>
+                                <div className="course_footer">
+                                    <div className="teacher">
+                                        <img src="./image/teacher/teacher8.jpg" alt="" />
+                                        <p>Samuel Carter</p>
+                                    </div>
+                                <a className="course_btn" onClick={() => { navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`) }}>
                                         Chi tiết
                                     </a>
                                 </div>
@@ -36,6 +44,7 @@ const DanhSachKhoaHoc = () => {
                     );
                 })}
             </div>
+        </div>
         </div>
     );
 };

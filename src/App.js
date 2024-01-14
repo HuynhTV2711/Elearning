@@ -1,3 +1,4 @@
+import './styles/style.scss'
 import { Route, Routes } from "react-router-dom";
 import UserTemplate from "./templates/userTemplate/UserTemplate";
 import HomePage from "./pages/HomePage/HomePage";
