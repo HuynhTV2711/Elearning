@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
+        <div className="container">
           <a className="navbar-brand logo" onClick={() => { navigate(`/`) }} >
             Cyber
           </a>

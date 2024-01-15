@@ -6,7 +6,7 @@ const Footer = () => {
       {/* Footer */}
       <footer className="text-center text-lg-start">
         {/* Section: Social media */}
-        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom container">
           {/* Left */}
           <div className="me-5 d-none d-lg-block">
             <span>Kết nối với chúng tôi thông qua mạng xã hội:</span>
