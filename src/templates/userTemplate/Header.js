@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux'
+
 
 const Header = () => {
+  const {user} = useSelector((state)=>{
+    return state.userSlice
+   })
+  //  console.log(user);
   const navigate = useNavigate();
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   useEffect(()=>{
@@ -89,14 +95,13 @@ const Header = () => {
             </form>
               </li>
             </ul>
-            <div className="d-flex">
-            
-            <a className="btn btn-outline-success" onClick={() => { navigate(`login`) }}>
+            <div >
+            {user ? (<div className="header_action"><p className="text-blue-400 text-sm mr-3">{user.hoTen}</p> 
+            <a onClick={() => { navigate(`login`) }}>
+                Logout
+              </a></div> ) : (<a onClick={() => { navigate(`login`) }}>
                 Login
-              </a>
-              <button className="btn btn-outline-success" onClick={() => { navigate(`register`) }}>
-                Đăng ký
-              </button>
+              </a>)}
             </div>
           </div>
         </div>

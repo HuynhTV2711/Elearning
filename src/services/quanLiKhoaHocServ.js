@@ -11,5 +11,11 @@ export const quanLiKhoaHocServ ={
         },
     layKhoaHocTheoDanhMuc: (maDanhMuc)=>{
         return https.get(`/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}&MaNhom=GP01`)
+    },
+    layDanhSachKhoaHocPhanTrang: (page)=>{
+        return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?page=${page}&pageSize=9&MaNhom=GP01`)
+    },
+    layThongTinHocVienKhoaHoc: (maKhoaHoc)=>{
+        return https.get(`/api/QuanLyKhoaHoc/LayThongTinHocVienKhoaHoc?maKhoaHoc=${maKhoaHoc}`)
     }
 }

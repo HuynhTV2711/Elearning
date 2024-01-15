@@ -28,5 +28,23 @@ header{
     .logo{
         cursor: pointer;
     }
+    .header_action{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        p{
+            color: $accent_color;
+            margin-right: 5px;
+            margin-bottom: 0;
+        }
+        a{
+            color: $secondary_color;
+        }
+        a:hover{
+            color: $accent_color;
+            transition: all 1s !important;
+            cursor: pointer;
+        }
+    }
              
 }

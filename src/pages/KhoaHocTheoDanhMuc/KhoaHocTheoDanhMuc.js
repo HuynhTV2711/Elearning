@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { quanLiKhoaHocServ } from '../../services/quanLiKhoaHocServ'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 
 const KhoaHocTheoDanhMuc = () => {
+  const navigate = useNavigate();
     let param = useParams();
     const [khoaHocTheoDanhMuc, setKhoaHocTheoDanhMuc] = useState([]);
     console.log(param);
@@ -16,20 +19,35 @@ const KhoaHocTheoDanhMuc = () => {
         });
     },[])
   return (
-    <div>
-        {
-            khoaHocTheoDanhMuc?.map((item, index)=>{
-                return <div className="card" style={{width: '18rem'}}>
-  <img src={item.hinhAnh} className="card-img-top" alt="..." />
-  <div className="card-body">
-    <h5 className="card-title">{item.tenKhoaHoc}</h5>
-    <p className="card-text">{item.moTa}</p>
-    <a href="#" className="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-
-            })
-        }
+    <div className="danh_sach_khoa_hoc">
+    <div className="container">
+        <h2 className="text-center title">Danh sách khóa học</h2>
+        <div className="row course_container">
+            {khoaHocTheoDanhMuc?.map((item, index) => {
+                return (
+                    <div className="col-lg-4 col-sm-6 col-12">
+                        <div className=" course_item">
+                            <img src={item.hinhAnh} className="img_item" alt={item.tenKhoaHoc} />
+                            <div className="course-body">
+                                <h5 className="course_title">{item.tenKhoaHoc}</h5>
+                                {/* <p className="card-text">{item.moTa}</p> */}
+                                <hr/>
+                            </div>
+                            <div className="course_footer">
+                                <div className="teacher">
+                                    <img src="./image/teacher/teacher8.jpg" alt="" />
+                                    <p>Samuel Carter</p>
+                                </div>
+                            <a className="course_btn" onClick={() => { navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`) }}>
+                                    Chi tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
     </div>
   )
 }
