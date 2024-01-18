@@ -8,5 +8,8 @@ export const quanLiNguoiDungServ ={
     },
     register :(data)=>{
         return https.post("/api/QuanLyNguoiDung/DangKy", data)
+    },
+    layDanhSachNguoiDungPhanTrang: (page)=>{
+        return https.get(`/api/QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang?MaNhom=GP01&page=${page}&pageSize=35`)
     }
 }

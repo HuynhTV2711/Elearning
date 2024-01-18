@@ -1,22 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
+import Pagination from 'react-bootstrap/Pagination';
 
 const QuanLiNguoiDung = () => {
   const [danhSachNguoiDung, setDanhSachNguoiDung] = useState([]);
-  useEffect(() => {
+  const [page, setPage] = useState(1);
+  const layDanhSachNguoiDung = (page)=>{
     quanLiNguoiDungServ
-      .layDanhSachNguoiDung()
-      .then((result) => {
-        console.log(result);
-        setDanhSachNguoiDung(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .layDanhSachNguoiDungPhanTrang(page)
+    .then((result) => {
+      console.log(result);
+      setDanhSachNguoiDung(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+  useEffect(() => {
+   layDanhSachNguoiDung(page)
   }, []);
+   let active = page;
+    let items = [];
+    for (let number = 1; number <= danhSachNguoiDung.totalPages; number++) {
+        items.push(
+            <Pagination.Item key={number} active={number === active} onClick={() => { layDanhSachNguoiDung(number); setPage(number) }}>
+                {number}
+            </Pagination.Item>,
+        );
+    }
   return (
     <div className="table-responsive">
-      <table className="table table-primary">
+      <table className="table table-primary table-responsive">
         <thead>
           <tr>
             <th scope="col">Tài Khoản</th>
@@ -28,7 +42,7 @@ const QuanLiNguoiDung = () => {
           </tr>
         </thead>
         <tbody>
-          {danhSachNguoiDung?.map((item, index) => {
+          {danhSachNguoiDung.items?.map((item, index) => {
             return (
               <tr className="">
                 <td scope="row">{item.taiKhoan}</td>
@@ -49,6 +63,9 @@ const QuanLiNguoiDung = () => {
           })}
         </tbody>
       </table>
+      <div className="d-flex justify-content-end mt-4">
+                    <Pagination>{items}</Pagination>
+                </div>
     </div>
   );
 };
