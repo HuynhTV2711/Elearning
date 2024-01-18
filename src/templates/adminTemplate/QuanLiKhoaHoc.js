@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { quanLiKhoaHocServ } from '../../services/quanLiKhoaHocServ';
 import Pagination from 'react-bootstrap/Pagination';
+import { message } from "antd";
 
 const QuanLiKhoaHoc = () => {
+  const [messageApi, contextHolder] = message.useMessage();
     const [danhSachKhoaHoc, setDanhSachKhoaHoc] = useState([]);
     const [page, setPage] = useState(1);
     const layDanhSachKhoaHoc = (page) => {
@@ -15,6 +17,23 @@ const QuanLiKhoaHoc = () => {
           .catch((err) => {
               console.log(err);
           });
+  }
+
+  const xoaKhoaHoc = (maKhoaHoc)=>{
+    quanLiKhoaHocServ
+    .xoaKhoaHoc(maKhoaHoc)
+    .then((result) => {
+      messageApi.open({
+        type: "success",
+        content: result.data,
+      });
+    layDanhSachKhoaHoc(page);
+    }).catch((err) => {
+      messageApi.open({
+        type: "error",
+        content: err.response.data,
+      });
+    });
   }
   useEffect(() => {
       layDanhSachKhoaHoc(page)
@@ -29,6 +48,8 @@ const QuanLiKhoaHoc = () => {
         );
     }
   return (
+    <>
+    {contextHolder}
     <div className="table-responsive">
     <table className="table table-primary">
       <thead>
@@ -49,7 +70,7 @@ const QuanLiKhoaHoc = () => {
               <td>{item.soLuongHocVien}</td>
               <td>{item.moTa}</td>
               <td>
-                <button className="btn">
+                <button className="btn" onClick={()=>{xoaKhoaHoc(item.maKhoaHoc)}}>
                   <i className="fa-regular fa-trash-can"></i>
                 </button>
                 <button className="btn">
@@ -65,6 +86,7 @@ const QuanLiKhoaHoc = () => {
                     <Pagination>{items}</Pagination>
                 </div>
   </div>
+  </>
   )
 }
 

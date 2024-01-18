@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 import Pagination from 'react-bootstrap/Pagination';
+import { message } from "antd";
+
 
 const QuanLiNguoiDung = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [danhSachNguoiDung, setDanhSachNguoiDung] = useState([]);
   const [page, setPage] = useState(1);
   const layDanhSachNguoiDung = (page)=>{
@@ -14,6 +17,23 @@ const QuanLiNguoiDung = () => {
     })
     .catch((err) => {
       console.log(err);
+    });
+    
+  }
+  const xoaNguoiDung = (taiKhoan)=>{
+    quanLiNguoiDungServ
+    .xoaNguoiDung(taiKhoan)
+    .then((result) => {
+      messageApi.open({
+        type: "success",
+        content: result.data,
+      });
+      layDanhSachNguoiDung(page);
+    }).catch((err) => {
+      messageApi.open({
+        type: "error",
+        content: err.response.data,
+      });
     });
   }
   useEffect(() => {
@@ -29,6 +49,8 @@ const QuanLiNguoiDung = () => {
         );
     }
   return (
+    <>
+    {contextHolder}
     <div className="table-responsive">
       <table className="table table-primary table-responsive">
         <thead>
@@ -51,7 +73,7 @@ const QuanLiNguoiDung = () => {
                 <td>{item.soDt}</td>
                 <td>{item.maLoaiNguoiDung}</td>
                 <td className="d-flex">
-                  <button className="btn">
+                  <button className="btn"  onClick={()=>{xoaNguoiDung(item.taiKhoan)}}>
                     <i className="fa-regular fa-trash-can"></i>
                   </button>
                   <button className="btn">
@@ -67,6 +89,7 @@ const QuanLiNguoiDung = () => {
                     <Pagination>{items}</Pagination>
                 </div>
     </div>
+    </>
   );
 };
 
