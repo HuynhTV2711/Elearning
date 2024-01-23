@@ -44,15 +44,17 @@ const DanhSachKhoaHoc = () => {
                                         className="img_item"
                                         alt={item.tenKhoaHoc}
                                     />
+                                    <div className="course_item_content">
+
                                     <div className="course-body">
                                         <h5 className="course_title">{item.tenKhoaHoc}</h5>
-                                        <hr />
+                                        <div className="rate">
+                                        <i class="fa-solid fa-star"></i>
+                                            <p>4.5</p>
+                                        </div>
                                     </div>
                                     <div className="course_footer">
-                                        <div className="teacher">
-                                            <img src="./image/teacher/teacher8.jpg" alt="" />
-                                            <p>Samuel Carter</p>
-                                        </div>
+                                        <span class="price">12.000.000</span>
                                         <a
                                             className="course_btn"
                                             onClick={() => {
@@ -62,6 +64,8 @@ const DanhSachKhoaHoc = () => {
                                             Chi tiết
                                         </a>
                                     </div>
+                                    </div>
+
                                 </div>
                             </div>
                         );

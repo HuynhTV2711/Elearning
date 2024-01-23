@@ -1,6 +1,9 @@
 header{
     background-color: $primary_color;
     font-weight: $fw_500;
+    z-index: 999 !important;
+    position: sticky !important;
+    top: 0px !important;
     .navbar{
         padding: 0px !important;
     }
@@ -45,6 +48,16 @@ header{
             transition: all 1s !important;
             cursor: pointer;
         }
+
     }
-             
+    .form_search{
+        display: flex;
+        button{
+            border: 0px;
+            padding: 0px;
+            background-color: transparent;
+            color: $secondary_color;
+            cursor: pointer;
+        }
+    }             
 }

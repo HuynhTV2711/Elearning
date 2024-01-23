@@ -68,29 +68,19 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  Dịch vụ
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Tin tức
-                </a>
-                </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
                   Liện hệ
                 </a>
               </li>
               <li className="nav-item">
-              <form className="d-flex" role="search">
+              <form className="d-flex form_search" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
-                Search
+              <button>
+              <i class="fa-solid fa-magnifying-glass"></i>
               </button>
             </form>
               </li>

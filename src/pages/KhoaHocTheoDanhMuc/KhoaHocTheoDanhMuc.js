@@ -26,24 +26,36 @@ const KhoaHocTheoDanhMuc = () => {
             {khoaHocTheoDanhMuc?.map((item, index) => {
                 return (
                     <div className="col-lg-4 col-sm-6 col-12">
-                        <div className=" course_item">
-                            <img src={item.hinhAnh} className="img_item" alt={item.tenKhoaHoc} />
-                            <div className="course-body">
-                                <h5 className="course_title">{item.tenKhoaHoc}</h5>
-                                {/* <p className="card-text">{item.moTa}</p> */}
-                                <hr/>
-                            </div>
-                            <div className="course_footer">
-                                <div className="teacher">
-                                    <img src="./image/teacher/teacher8.jpg" alt="" />
-                                    <p>Samuel Carter</p>
-                                </div>
-                            <a className="course_btn" onClick={() => { navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`) }}>
-                                    Chi tiết
-                                </a>
+                    <div className=" course_item">
+                        <img
+                            src={item.hinhAnh}
+                            className="img_item"
+                            alt={item.tenKhoaHoc}
+                        />
+                        <div className="course_item_content">
+
+                        <div className="course-body">
+                            <h5 className="course_title">{item.tenKhoaHoc}</h5>
+                            <div className="rate">
+                            <i class="fa-solid fa-star"></i>
+                                <p>4.5</p>
                             </div>
                         </div>
+                        <div className="course_footer">
+                        <span class="price">12.000.000</span>
+                            <a
+                                className="course_btn"
+                                onClick={() => {
+                                    navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`);
+                                }}
+                            >
+                                Chi tiết
+                            </a>
+                        </div>
+                        </div>
+
                     </div>
+                </div>
                 );
             })}
         </div>
