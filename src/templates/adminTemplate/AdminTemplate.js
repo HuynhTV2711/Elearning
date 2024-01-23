@@ -34,8 +34,8 @@ const AdminTemplate = () => {
     {contextHolder}
     <div className="mt-5">
       <div className="row">
-        <div className="col-md-3"><Tabs /></div>
-        <div className="col-md-9"><Outlet /></div>
+        <div className="col-md-2 col-lg-2 col-12"><Tabs /></div>
+        <div className="col-md-10 col-lg-10 col-12"><Outlet /></div>
       </div>
       <BackTop
         style={{ backgroundColor: '#0082C8', color: '#FFFFFF', borderRadius:'10px', padding: '7px 10px', border:"0.5px solid #FFFFFF" }}

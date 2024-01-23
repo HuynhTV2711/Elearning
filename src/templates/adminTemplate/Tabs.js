@@ -6,7 +6,7 @@ const Tabs = () => {
   return (
       <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={()=>{
-            navigate("quanlinguoidung")
+            navigate("/admin")
         }}>Quản lí người dùng</a>
         <a className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false" onClick={()=>{
             navigate("quanlikhoahoc")

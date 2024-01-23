@@ -40,7 +40,7 @@ const QuanLiKhoaHoc = () => {
   useEffect(() => {
     layDanhSachKhoaHoc(currentPage);
   }, []);
-  const itemsPerPage = 7; 
+  const itemsPerPage = 7;
   const totalItems = danhSachKhoaHoc.totalCount;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const handleClick = (currentPage) => {
@@ -49,7 +49,7 @@ const QuanLiKhoaHoc = () => {
   };
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    const maxVisiblePages = 7; 
+    const maxVisiblePages = 7;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
 
     for (let i = 1; i <= totalPages; i++) {
@@ -91,7 +91,9 @@ const QuanLiKhoaHoc = () => {
               <th scope="col">Tên Khóa học</th>
               <th scope="col">Số lượng hv</th>
               <th scope="col">Mô tả</th>
-              <th scope="col"><i class="fa-solid fa-gear"></i></th>
+              <th scope="col">
+                <i class="fa-solid fa-gear"></i>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -103,6 +105,9 @@ const QuanLiKhoaHoc = () => {
                   <td>{item.soLuongHocVien}</td>
                   <td>{item.moTa}</td>
                   <td>
+                    <button className="btn">
+                      <i class="fa-solid fa-user-pen"></i>
+                    </button>
                     <button
                       className="btn"
                       onClick={() => {
@@ -118,7 +123,7 @@ const QuanLiKhoaHoc = () => {
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                       >
-                        <i className="fa-regular fa-pen-to-square"></i>
+                        <i class="fa-solid fa-wrench"></i>
                       </button>
                       <div
                         className="modal fade"

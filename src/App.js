@@ -24,8 +24,7 @@ function App() {
           <Route element={<ThongTinCaNhan/>} path='thongtincanhan'/>
         </Route>
         <Route element={<AdminTemplate/>} path="/admin">
-          <Route element={<Tabs/>} index/>
-          <Route element={<QuanLiNguoiDung/>} path="quanlinguoidung"/>
+          <Route element={<QuanLiNguoiDung/>} index/>
           <Route element={<QuanLiKhoaHoc/>} path="quanlikhoahoc"/>
         </Route>
         <Route element={<Login/>} path="login"/>
