@@ -71,9 +71,6 @@ const ThongTinCaNhan = () => {
                 quanLiNguoiDungServ
                 .capNhatThongTinNguoiDung(values)
                 .then((result) => {
-                    console.log(result);
-                    saveLocal(result.data, "user_infor");
-                    dispatch(saveInforUser(result.data));
                     messageApi.open({
                         type: "success",
                         content: "Cập nhật thành công, vui lòng đăng nhập lại",

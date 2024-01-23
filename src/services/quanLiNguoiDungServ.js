@@ -10,7 +10,7 @@ export const quanLiNguoiDungServ ={
         return https.post("/api/QuanLyNguoiDung/DangKy", data)
     },
     layDanhSachNguoiDungPhanTrang: (page)=>{
-        return https.get(`/api/QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang?MaNhom=GP01&page=${page}&pageSize=35`)
+        return https.get(`/api/QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang?MaNhom=GP01&page=${page}&pageSize=7`)
     },
     xoaNguoiDung: (taiKhoan)=>{
         return https.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`)

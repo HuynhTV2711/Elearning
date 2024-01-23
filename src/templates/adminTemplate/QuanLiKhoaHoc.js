@@ -6,10 +6,11 @@ import { message } from "antd";
 const QuanLiKhoaHoc = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [danhSachKhoaHoc, setDanhSachKhoaHoc] = useState([]);
-  const [page, setPage] = useState(1);
-  const layDanhSachKhoaHoc = (page) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const layDanhSachKhoaHoc = (currentPage) => {
     quanLiKhoaHocServ
-      .layDanhSachKhoaHocPhanTrang(page)
+      .layDanhSachKhoaHocPhanTrang(currentPage)
       .then((result) => {
         console.log(result);
         setDanhSachKhoaHoc(result.data);
@@ -27,7 +28,7 @@ const QuanLiKhoaHoc = () => {
           type: "success",
           content: result.data,
         });
-        layDanhSachKhoaHoc(page);
+        layDanhSachKhoaHoc(currentPage);
       })
       .catch((err) => {
         messageApi.open({
@@ -37,24 +38,48 @@ const QuanLiKhoaHoc = () => {
       });
   };
   useEffect(() => {
-    layDanhSachKhoaHoc(page);
+    layDanhSachKhoaHoc(currentPage);
   }, []);
-  let active = page;
-  let items = [];
-  for (let number = 1; number <= danhSachKhoaHoc.totalPages; number++) {
-    items.push(
-      <Pagination.Item
-        key={number}
-        active={number === active}
-        onClick={() => {
-          layDanhSachKhoaHoc(number);
-          setPage(number);
-        }}
-      >
-        {number}
-      </Pagination.Item>
-    );
-  }
+  const itemsPerPage = 7; 
+  const totalItems = danhSachKhoaHoc.totalCount;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const handleClick = (currentPage) => {
+    setCurrentPage(currentPage);
+    layDanhSachKhoaHoc(currentPage);
+  };
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 7; 
+    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const isCurrentPage = i === currentPage;
+
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - halfVisiblePages &&
+          i <= currentPage + halfVisiblePages)
+      ) {
+        pageNumbers.push(
+          <Pagination.Item
+            key={i}
+            active={isCurrentPage}
+            onClick={() => handleClick(i)}
+          >
+            {i}
+          </Pagination.Item>
+        );
+      } else if (
+        i === currentPage - halfVisiblePages - 1 ||
+        i === currentPage + halfVisiblePages + 1
+      ) {
+        pageNumbers.push(<Pagination.Ellipsis key={i} />);
+      }
+    }
+
+    return pageNumbers;
+  };
   return (
     <>
       {contextHolder}
@@ -142,7 +167,26 @@ const QuanLiKhoaHoc = () => {
           </tbody>
         </table>
         <div className="d-flex justify-content-end mt-4">
-          <Pagination>{items}</Pagination>
+          {/* <Pagination>{items}</Pagination> */}
+          <Pagination>
+            <Pagination.First
+              onClick={() => handleClick(1)}
+              disabled={currentPage === 1}
+            />
+            <Pagination.Prev
+              onClick={() => handleClick(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+            {renderPageNumbers()}
+            <Pagination.Next
+              onClick={() => handleClick(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
+            <Pagination.Last
+              onClick={() => handleClick(totalPages)}
+              disabled={currentPage === totalPages}
+            />
+          </Pagination>
         </div>
       </div>
     </>
