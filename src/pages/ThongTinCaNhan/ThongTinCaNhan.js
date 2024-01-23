@@ -4,10 +4,25 @@ import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { message } from "antd";
 import { quanLiKhoaHocServ } from '../../services/quanLiKhoaHocServ';
-import { getLocal } from '../../utils/local';
+import { getLocal, saveLocal } from '../../utils/local';
+import { saveInforUser } from '../../redux/slice/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 const ThongTinCaNhan = () => {
+    useEffect(() => {
+        quanLiNguoiDungServ
+            .thongTinNguoiDung()
+            .then((result) => {
+                console.log(result);
+                setThongTinCaNhan(result.data)
+            }).catch((err) => {
+                console.log(err);
+            });
+    }, []);
+    let dispatch = useDispatch();
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
     let [thongTinCaNhan, setThongTinCaNhan] = useState([]);
     let valueHuy =(mkh)=> {
@@ -25,6 +40,12 @@ const ThongTinCaNhan = () => {
                 type: "success",
                 content: result.data,
               });
+              quanLiNguoiDungServ.thongTinNguoiDung()
+              .then((res) => {
+                setThongTinCaNhan(res.data)
+              }).catch((err) => {
+                
+              });
         }).catch((err) => {
             console.log(err);
             messageApi.open({
@@ -33,16 +54,7 @@ const ThongTinCaNhan = () => {
               });
         });
     }
-    useEffect(() => {
-        quanLiNguoiDungServ
-            .thongTinNguoiDung()
-            .then((result) => {
-                console.log(result);
-                setThongTinCaNhan(result.data)
-            }).catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    
     const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
         useFormik({
             initialValues: {
@@ -60,10 +72,15 @@ const ThongTinCaNhan = () => {
                 .capNhatThongTinNguoiDung(values)
                 .then((result) => {
                     console.log(result);
+                    saveLocal(result.data, "user_infor");
+                    dispatch(saveInforUser(result.data));
                     messageApi.open({
                         type: "success",
-                        content: "Cập nhật thành công",
+                        content: "Cập nhật thành công, vui lòng đăng nhập lại",
                       });
+                      setTimeout(() => {
+                        navigate("/login");
+                      }, 2000);
                 }).catch((err) => {
                     console.log(err);
                     messageApi.open({
@@ -86,7 +103,7 @@ const ThongTinCaNhan = () => {
         <div className="thong_tin_ca_nhan">
             <div className="container ">
                 <div className="row">
-                    <div className="col-4">
+                    <div className="col-lg-4 col-sm-12 col-12 mb-4">
                         <h3>Thông tin cá nhân</h3>
                         <div className="thong_tin">
                             <div>
@@ -203,7 +220,7 @@ const ThongTinCaNhan = () => {
                                                 )}
                                             </div>
                                             <hr />
-                                            <button type="submit" className="btn btn-primary">Lưu thay đổi</button>
+                                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Lưu thay đổi</button>
                                             </form>
                                         </div>
                                     </div>
@@ -212,7 +229,7 @@ const ThongTinCaNhan = () => {
                         </div>
 
                     </div>
-                    <div className="col-8">
+                    <div className="col-lg-8 col-sm-12 col-12">
                         <h3>Khóa học của tôi</h3>
                         {thongTinCaNhan.chiTietKhoaHocGhiDanh?.map((item, index) => {
                             return (

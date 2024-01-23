@@ -43,7 +43,7 @@ const Login = () => {
                 saveLocal(result.data, "user_infor");
                 dispatch(saveInforUser(result.data));
             setTimeout(() => {
-              navigate("/");
+              window.location.href = '/';
             }, 2000);
           })
           .catch((err) => {

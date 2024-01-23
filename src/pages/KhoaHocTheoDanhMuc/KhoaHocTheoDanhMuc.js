@@ -8,8 +8,8 @@ const KhoaHocTheoDanhMuc = () => {
   const navigate = useNavigate();
     let param = useParams();
     const [khoaHocTheoDanhMuc, setKhoaHocTheoDanhMuc] = useState([]);
-    console.log(param);
     useEffect(()=>{
+        console.log(1);
         quanLiKhoaHocServ.layKhoaHocTheoDanhMuc(param.maDanhMuc)
         .then((result) => {
             console.log(result);
@@ -17,7 +17,7 @@ const KhoaHocTheoDanhMuc = () => {
         }).catch((err) => {
             console.log(err);
         });
-    },[])
+    }, [param.maDanhMuc])
   return (
     <div className="danh_sach_khoa_hoc">
     <div className="container">

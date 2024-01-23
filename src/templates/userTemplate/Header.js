@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useSelector } from 'react-redux'
 
 
@@ -8,13 +8,12 @@ const Header = () => {
   const {user} = useSelector((state)=>{
     return state.userSlice
    })
-  //  console.log(user);
+   console.log(user);
   const navigate = useNavigate();
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   useEffect(()=>{
     quanLiKhoaHocServ.layDanhMucKhoaHoc()
     .then((result) => {
-      console.log(result);
       setDanhMucKhoaHoc(result.data)
     }).catch((err) => {
       console.log(err);
