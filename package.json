@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/react-back-top": "^4.22.3",
     "antd": "^5.13.1",
     "axios": "^1.6.5",
     "formik": "^2.4.5",

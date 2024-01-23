@@ -33,7 +33,7 @@ const DanhSachKhoaHoc = () => {
     return (
         <div className="danh_sach_khoa_hoc">
             <div className="container">
-                <h2 className="text-center title">Danh sách khóa học</h2>
+                <h2 className="text-center title"><i class="fa-solid fa-book-open"></i>Danh sách khóa học</h2>
                 <div className="row course_container">
                     {danhSachKhoaHoc.items?.map((item, index) => {
                         return (
