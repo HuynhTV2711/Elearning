@@ -14,5 +14,11 @@ export const quanLiNguoiDungServ ={
     },
     xoaNguoiDung: (taiKhoan)=>{
         return https.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`)
+    },
+    thongTinNguoiDung: ()=>{
+        return https.post(`/api/QuanLyNguoiDung/ThongTinNguoiDung`)
+    },
+    capNhatThongTinNguoiDung:(data)=>{
+        return https.put(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, data)
     }
 }

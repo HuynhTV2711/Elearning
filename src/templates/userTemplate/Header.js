@@ -86,7 +86,7 @@ const Header = () => {
               </li>
             </ul>
             <div >
-            {user ? (<div className="header_action"><p className="text-blue-400 text-sm mr-3">{user.hoTen}</p> 
+            {user ? (<div className="header_action"><p className="text-blue-400 text-sm mr-3" onClick={() => { navigate(`thongtincanhan`) }}>{user.hoTen}</p> 
             <a onClick={() => { navigate(`login`) }}>
                 Logout
               </a></div> ) : (<a onClick={() => { navigate(`login`) }}>

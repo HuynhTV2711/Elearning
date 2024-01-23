@@ -23,5 +23,8 @@ export const quanLiKhoaHocServ ={
     },
     xoaKhoaHoc: (maKhoaHoc)=>{
         return https.delete(`/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`)
+    },
+    huyGhiDanh: (data)=>{
+        return https.post("/api/QuanLyKhoaHoc/HuyGhiDanh", data)
     }
 }

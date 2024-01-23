@@ -11,6 +11,7 @@ import AdminTemplate from "./templates/adminTemplate/AdminTemplate";
 import Tabs from "./templates/adminTemplate/Tabs";
 import QuanLiNguoiDung from "./templates/adminTemplate/QuanLiNguoiDung";
 import QuanLiKhoaHoc from "./templates/adminTemplate/QuanLiKhoaHoc";
+import ThongTinCaNhan from './pages/ThongTinCaNhan/ThongTinCaNhan';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route element={<HomePage/>} index/>
           <Route element={<ChiTietKhoaHoc/>} path="chitietkhoahoc/:maKhoaHoc"/>
           <Route element={<KhoaHocTheoDanhMuc/>} path="khoaHocTheoDanhMuc/:maDanhMuc"/>
+          <Route element={<ThongTinCaNhan/>} path='thongtincanhan'/>
         </Route>
         <Route element={<AdminTemplate/>} path="/admin">
           <Route element={<Tabs/>} index/>
