@@ -1,0 +1,135 @@
+.chi_tiet_khoa_hoc{
+    .row{
+        margin-top: 50px;
+        p{
+            margin-bottom: 0;
+        }
+        .col_left{
+            padding: 0 30px 0 0;
+            .sub_title{
+                @include textStyle($fs_20, $fw_500 ,$accent_color);
+            }
+            .ten_khoa_hoc{
+                @include textStyle($fs_33, $fw_700 ,$blue_dark);
+                margin-bottom: 30px;
+            }
+            .thong_tin_khoa_hoc{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                p{
+                @include textStyle($fs_18, $fw_500 ,$blue_dark);
+                }
+                .giang_vien{
+                    display: flex;
+                    align-items: center;
+                    img{
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 10px;
+                    }
+                }
+                .linh_vuc{
+                    display: flex;
+                    align-items: center;
+                    i{
+                        font-size: $fs_40;
+                        margin-right: 10px;
+                        color: $primary_color;
+                    }
+                   
+                }
+                .danh_gia{
+                    i{
+                        color: orange;
+                    }
+                }
+            }
+            .mo_ta{
+                @include textStyle($fs_18, $fw_300 ,$blue_dark);
+                margin: 25px 0;
+            }
+            .chuong_trinh_hoc{
+                img{
+                    width: 100%;
+                }
+            }
+            .quyen_loi{
+                margin-bottom: 50px;
+                .sub_title{
+                    margin-bottom: 50px;
+                }
+                img{
+                    width: 100%;
+                }
+            }
+        }
+        .col_right{
+            .dang_ky{
+                box-shadow: 1px 1px 10px 4px #dadada;
+                padding: 10px 10px 30px 10px;
+                border-radius: 10px;
+                .modal-body{
+                    p{
+                        @include textStyle($fs_18, $fw_300 ,$black);
+                       }
+                       span{
+                        @include textStyle($fs_18, $fw_500 ,$blue_dark);
+                       }
+                }
+                img{
+                    border-radius: 10px 10px 0 0;
+                    width: 100%;
+                    object-fit: cover;
+                }
+                .price{
+                    text-align: end;
+                @include textStyle($fs_20, $fw_500 ,$accent_color);
+                margin: 15px 0;
+                }
+                .btn{
+                    width: 100%;
+                    border: 1px solid $primary_color;
+                    color: $primary_color;
+                    background-color: $secondary_color;
+                }
+                .btn:hover{
+                    border: 1px solid $secondary_color;
+                    color: $secondary_color;
+                    background-color: $primary_color;
+                    transition: all 1s;
+                }
+            }
+            .thong_tin_lop_hoc{
+
+                div{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 25px;
+                    p{
+                     @include textStyle($fs_18, $fw_300 ,$black);
+                    }
+                    span{
+                     @include textStyle($fs_18, $fw_500 ,$blue_dark);
+                    }
+                    i{
+                        font-size: $fs_22;
+                        color: $accent_color;
+                    }
+                }
+            }
+            .gif{
+                text-align: center;
+                img{
+                    width: 100%;
+                    object-fit: cover;
+                    margin: 20px 0;
+                }
+            }
+            
+        }
+        }
+}
