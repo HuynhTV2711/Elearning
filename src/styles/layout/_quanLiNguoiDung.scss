@@ -1,0 +1,82 @@
+.quan_li{
+    a{
+        text-decoration: none;
+    }
+    .fa-gear{
+        font-size: $fs_16;
+
+    }
+    .fa-book{
+        color: green;
+        font-size: $fs_20;
+    }
+    .fa-trash-can{
+        color: red;
+        font-size: $fs_20;
+    }
+    .fa-pen-to-square{
+        color: orange   ;
+        font-size: $fs_20;
+    }
+    tbody{
+        img{
+            width: 100px;
+            height: 50px;
+            object-fit: cover;
+        }
+        .btn_container{
+            display: flex;
+            justify-content: center;
+            align-items: center ;            
+            gap: 5px;
+            .btn{
+                padding: 10px;
+                // font-size: 14px;
+            }
+        }
+        .btn_container_modal{
+            display: flex;
+                justify-content: end;
+                align-items: center ;            
+                gap: 5px;
+        }
+        .btn_green{
+            padding: 10px 15px;
+            background-color: green;
+            border-radius: 5px;
+            color: white;
+            border: none;
+        }
+        .btn_green:hover{
+            opacity: 0.9;
+            transition: all 0.5s;
+        }
+        .btn_xoa{
+            padding: 10px 15px;
+            background-color: red;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            margin-left: 5px;
+        }
+        .btn_xoa:hover{
+            opacity: 0.9;
+            transition: all 0.5s;
+        }
+        .modal_ghi_danh{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            h6, .mb-3{
+                margin-bottom: 0 !important;
+            }
+            select{
+                max-width: 200px;
+            }
+        }
+        h6{
+        @include textStyle($fs_16, $fw_700 ,$black);
+        }
+    }
+  
+}

@@ -12,6 +12,7 @@ import Tabs from "./templates/adminTemplate/Tabs";
 import QuanLiNguoiDung from "./templates/adminTemplate/QuanLiNguoiDung";
 import QuanLiKhoaHoc from "./templates/adminTemplate/QuanLiKhoaHoc";
 import ThongTinCaNhan from './pages/ThongTinCaNhan/ThongTinCaNhan';
+import ThemNguoiDung from './templates/adminTemplate/ThemNguoiDung';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route element={<AdminTemplate/>} path="/admin">
           <Route element={<QuanLiNguoiDung/>} index/>
           <Route element={<QuanLiKhoaHoc/>} path="quanlikhoahoc"/>
+          <Route element={<ThemNguoiDung/>} path='themnguoidung'/>
         </Route>
         <Route element={<Login/>} path="login"/>
         <Route element={<RegisterPage/>} path="register"/>

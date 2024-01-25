@@ -2,10 +2,72 @@ import React, { useEffect, useState } from "react";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 import Pagination from "react-bootstrap/Pagination";
 import { message } from "antd";
-import * as Yup from "yup";
 import { useFormik } from "formik";
+import { validationUser } from "../../utils/validation";
+import { useNavigate } from "react-router-dom";
+import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
+import { date } from "yup";
 
 const QuanLiNguoiDung = () => {
+  let valueTaiKhoan = (taiKhoan) => {
+    return {
+      taiKhoan: taiKhoan
+    }
+  }
+  let [khDaGhiDanh, setKhDaGhiDanh] = useState([]);
+  let [dskhChoDuyet, setDSKHChoDuyet] = useState([]);
+  const danhSachKhoaHocChoXetDuyet = (data)=>{
+    quanLiKhoaHocServ
+    .danhSachKhoaHocChoXetDuyet(data)
+    .then((result) => {
+      console.log(result);
+      setDSKHChoDuyet(result.data)
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+  const danhSachKhoaHocDaDuyet = (data) => {
+    quanLiKhoaHocServ
+      .danhSachKhoaHocDaDuyet(data)
+      .then((result) => {
+        console.log(result);
+        setKhDaGhiDanh(result.data)
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+  let valueHuy =(mkh, taiKhoan)=> {
+    return {
+        taiKhoan: taiKhoan,
+        maKhoaHoc: mkh
+    }
+}
+let huyGhiDanh = (data)=>{
+    quanLiKhoaHocServ
+    .huyGhiDanh(data)
+    .then((result) => {
+        console.log(result);
+        messageApi.open({
+            type: "success",
+            content: result.data,
+          });
+    }).catch((err) => {
+        console.log(err);
+        messageApi.open({
+            type: "error",
+            content: err.response.data,
+          });
+    });
+}
+  const [selectedValue, setSelectedValue] = useState('');
+  let dataGhiDanh = {
+    maKhoaHoc: selectedValue
+  };
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+  };
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [danhSachNguoiDung, setDanhSachNguoiDung] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +99,17 @@ const QuanLiNguoiDung = () => {
         });
       });
   };
+  const [danhSachKhoaHoc, setDanhSachKhoaHoc] = useState([]);
+  useEffect(() => {
+    quanLiKhoaHocServ
+      .layDanhSachKhoaHoc()
+      .then((result) => {
+        console.log(result);
+        setDanhSachKhoaHoc(result.data)
+      }).catch((err) => {
+        console.log(err);
+      });
+  }, [])
   useEffect(() => {
     layDanhSachNguoiDung(currentPage);
   }, []);
@@ -80,6 +153,32 @@ const QuanLiNguoiDung = () => {
 
     return pageNumbers;
   };
+  const capNhatThongTinNguoiDung = (values) => {
+    quanLiNguoiDungServ
+      .capNhatThongTinNguoiDung(values)
+      .then((result) => {
+        messageApi.open({
+          type: "success",
+          content: "Cập nhật thành công",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        messageApi.open({
+          type: "error",
+          content: err.response.data,
+        });
+      });
+  }
+  const themNguoiDung = (values) => {
+    quanLiNguoiDungServ
+      .register(values)
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
   const {
     handleSubmit,
     handleChange,
@@ -99,64 +198,154 @@ const QuanLiNguoiDung = () => {
       email: "",
       soDT: "",
     },
+
     onSubmit: (values) => {
       console.log(values);
-      quanLiNguoiDungServ
-        .capNhatThongTinNguoiDung(values)
-        .then((result) => {
-          messageApi.open({
-            type: "success",
-            content: "Cập nhật thành công",
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          messageApi.open({
-            type: "error",
-            content: err.response.data,
-          });
-        });
+      let checkUser = danhSachNguoiDung.items.find((item) => item.taiKhoan === values.taiKhoan);
+      if (checkUser) {
+        capNhatThongTinNguoiDung(values);
+      } else {
+        themNguoiDung(values);
+      }
     },
-    validationSchema: Yup.object({
-      taiKhoan: Yup.string().required("Vui lòng không bỏ trống"),
-      maLoaiNguoiDung: Yup.string().required("Vui lòng không bỏ trống"),
-      maNhom: Yup.string().required("Vui lòng không bỏ trống"),
-      hoTen: Yup.string().required("Vui lòng không bỏ trống"),
-      matKhau: Yup.string().required("Vui lòng không bỏ trống"),
-      email: Yup.string().required("Vui lòng không bỏ trống"),
-      soDT: Yup.string().required("Vui lòng không bỏ trống"),
-    }),
+    validationSchema: validationUser
   });
   return (
     <>
       {contextHolder}
+      <div className="mb-3">
+      </div>
       <div className="table-responsive">
-        <table className="table table-primary table-responsive">
+        <table className="table table-bordered">
           <thead>
             <tr>
+              <th scope="col">STT</th>
               <th scope="col">Tài Khoản</th>
               <th scope="col">Họ tên</th>
               <th scope="col">Email</th>
               <th scope="col">Số điện thoại</th>
-              <th scope="col">Mã loại Người dùng</th>
-              <th scope="col">
-                <i class="fa-solid fa-gear"></i>
-              </th>
+              <th scope="col">Người dùng</th>
+              <th scope="col">Hành động</th>
             </tr>
           </thead>
           <tbody>
             {danhSachNguoiDung.items?.map((item, index) => {
               return (
-                <tr className="">
+                <tr>
+                  <td>{index + 1}</td>
                   <td scope="row">{item.taiKhoan}</td>
                   <td>{item.hoTen}</td>
                   <td>{item.email}</td>
-                  <td>{item.soDt}</td>
+                  <td>{item.soDT}</td>
                   <td>{item.maLoaiNguoiDung}</td>
-                  <td className="d-flex">
-                    <button className="btn">
-                      <i class="fa-solid fa-user-pen"></i>
+                  <td className="btn_container">
+                    <button className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { danhSachKhoaHocDaDuyet(valueTaiKhoan(item.taiKhoan)); danhSachKhoaHocChoXetDuyet(valueTaiKhoan(item.taiKhoan)) }}>
+                      <i class="fa-solid fa-book"></i>
                     </button>
+                    <div className="modal fade modal-md" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Ghi danh</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                          </div>
+                          <div class="modal-body">
+                            <div className="modal_ghi_danh">
+                              <h6>Chọn khóa học</h6>
+                              <div class="mb-3">
+                                <form>
+                                  <select
+                                    class="form-select"
+                                    name=""
+                                    id=""
+                                    value={selectedValue} onChange={handleSelectChange}
+                                  >
+                                    <option selected>Chọn khóa học</option>
+                                    {
+                                      danhSachKhoaHoc?.map((itemKhoaHoc, index) => {
+                                        return (<option value={itemKhoaHoc.maKhoaHoc}>{itemKhoaHoc.tenKhoaHoc}</option>)
+                                      })
+                                    }
+                                  </select>
+                                </form>
+                              </div>
+
+                              <button className="btn_green" onClick={() => {
+                                dataGhiDanh.taiKhoan = item.taiKhoan
+                                console.log(dataGhiDanh);
+                                quanLiKhoaHocServ
+                                  .ghiDanhKhoaHoc(dataGhiDanh)
+                                  .then((result) => {
+                                    console.log(result);
+                                    messageApi.open({
+                                      type: "success",
+                                      content: result.data,
+                                    });
+                                  }).catch((err) => {
+                                    messageApi.open({
+                                      type: "error",
+                                      content: "Thất bại vui lòng thử lại",
+                                    });
+                                  });
+                              }}>Ghi danh</button>
+                            </div>
+                            <hr />
+                            <div className="modal_xac_thuc">
+                              <h6>Khóa học chờ xác thực</h6>
+                              <table className="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên khóa học</th>
+                                    <th scope="col">Chờ xác nhận</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td><button className="btn_green">Xác nhận</button>
+                                      <button className="btn_xoa">Xóa</button></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <hr />
+                            <div className="modal_da_ghi_danh">
+
+                              <h6>Khóa học đã ghi danh</h6>
+                              <table className="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên khóa học</th>
+                                    <th scope="col">Hủy ghi danh</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    khDaGhiDanh?.map((khgh, index) => {
+                                      return (
+                                        <tr>
+                                          <th scope="row">{index + 1}</th>
+                                          <td>{khgh.tenKhoaHoc}</td>
+                                          <td><button className="btn_xoa" onClick={()=>{
+                                            huyGhiDanh(valueHuy(khgh.maKhoaHoc, item.taiKhoan ))
+                                          }}>Xóa</button></td>
+                                        </tr>
+
+                                      )
+                                    })
+                                  }
+
+                                </tbody>
+                              </table>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <button
                       className="btn"
                       onClick={() => {
@@ -170,29 +359,26 @@ const QuanLiNguoiDung = () => {
                         type="button"
                         className="btn"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
+                        data-bs-target="#chinhSuaNguoiDung"
                         onClick={() => {
                           // resetForm()
                           setValues(item);
                         }}
                       >
-                        <i class="fa-solid fa-wrench"></i>
+                        <i class="fa-solid fa-pen-to-square"></i>
                       </button>
                       <div
                         className="modal fade"
-                        id="exampleModal"
+                        id="chinhSuaNguoiDung"
                         tabIndex={-1}
-                        aria-labelledby="exampleModalLabel"
+                        aria-labelledby="chinhSuaNguoiDung"
                         aria-hidden="true"
                       >
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
-                              <h1
-                                className="modal-title fs-5"
-                                id="exampleModalLabel"
-                              >
-                                Cập nhật thông tin
+                              <h1 className="modal-title fs-5" id="chinhSuaNguoiDung">
+                                Cập nhật
                               </h1>
                               <button
                                 type="button"
@@ -203,134 +389,145 @@ const QuanLiNguoiDung = () => {
                             </div>
                             <div className="modal-body">
                               <form onSubmit={handleSubmit}>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Tài khoản
-                                  </label>
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-user"></i>
+                                  </span>
                                   <input
                                     type="text"
-                                    class="form-control"
-                                    name="taiKhoan"
-                                    id="taiKhoan"
+                                    className="form-control"
+                                    placeholder="Tài khoản"
+                                    aria-label="Tài khoản"
                                     aria-describedby="helpId"
                                     disabled
-                                    placeholder=""
+                                    name="taiKhoan"
+                                    id="taiKhoan"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.taiKhoan}
                                   />
-                                  {errors.taiKhoan && touched.taiKhoan ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.taiKhoan}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
                                 </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Họ tên
-                                  </label>
+                                {errors.taiKhoan && touched.taiKhoan ? (
+                                  <p className="text-danger mt-1">{errors.taiKhoan}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-address-book"></i>
+                                  </span>
                                   <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
+                                    placeholder="Họ và tên"
+                                    aria-label="Họ và tên"
+                                    aria-describedby="helpId"
                                     name="hoTen"
                                     id="hoTen"
-                                    aria-describedby="helpId"
-                                    placeholder=""
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.hoTen}
                                   />
-                                  {errors.hoTen && touched.hoTen ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.hoTen}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
                                 </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Mật khẩu
-                                  </label>
+                                {errors.hoTen && touched.hoTen ? (
+                                  <p className="text-danger mt-1">{errors.hoTen}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-envelope"></i>
+                                  </span>
                                   <input
                                     type="text"
-                                    class="form-control"
-                                    name="matKhau"
-                                    id="matKhau"
+                                    className="form-control"
+                                    placeholder="Email"
+                                    aria-label="Email"
                                     aria-describedby="helpId"
-                                    placeholder=""
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.matKhau}
-                                  />
-                                  {errors.matKhau && touched.matKhau ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.matKhau}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Email
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
                                     name="email"
                                     id="email"
-                                    aria-describedby="helpId"
-                                    placeholder=""
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
                                   />
-                                  {errors.email && touched.email ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.email}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
                                 </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Số điện thoại
-                                  </label>
+                                {errors.email && touched.email ? (
+                                  <p className="text-danger mt-1">{errors.email}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-key"></i>
+                                  </span>
+                                  <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Mật khẩu"
+                                    aria-label="Mật khẩu"
+                                    aria-describedby="helpId"
+                                    name="matKhau"
+                                    id="matKhau"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.matKhau}
+                                  />
+                                </div>
+                                {errors.matKhau && touched.matKhau ? (
+                                  <p className="text-danger mt-1">{errors.matKhau}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-phone"></i>
+                                  </span>
                                   <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
+                                    placeholder="Số điện thoại"
+                                    aria-label="Số điện thoại"
+                                    aria-describedby="helpId"
                                     name="soDT"
                                     id="soDT"
-                                    aria-describedby="helpId"
-                                    placeholder=""
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.soDT}
                                   />
-                                  {errors.soDT && touched.soDT ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.soDT}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
                                 </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Mã nhóm
-                                  </label>
-                                  <select
-                                    class="form-select form-select-lg"
-                                    name="maNhom"
+                                {errors.soDT && touched.soDT ? (
+                                  <p className="text-danger mt-1">{errors.soDT}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                  </span>
+                                  <select class="form-select" name="maLoaiNguoiDung"
+                                    id="maLoaiNguoiDung"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.maLoaiNguoiDung}>
+                                    <option value="">Loại người dùng</option>
+                                    <option value="GV">Giáo vụ</option>
+                                    <option value="HV">Học viên</option>
+                                  </select>
+                                </div>
+                                {errors.maLoaiNguoiDung && touched.maLoaiNguoiDung ? (
+                                  <p className="text-danger mt-1">{errors.maLoaiNguoiDung}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="input-group mb-3">
+                                  <span className="input-group-text" id="helpId">
+                                    <i class="fa-solid fa-people-group"></i>
+                                  </span>
+                                  <select class="form-select" name="maNhom"
                                     id="maNhom"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.maNhom}
-                                  >
+                                    value={values.maNhom}>
                                     <option value="">Mã nhóm</option>
                                     <option value="GP01">GP01</option>
                                     <option value="GP02">GP02</option>
@@ -342,46 +539,25 @@ const QuanLiNguoiDung = () => {
                                     <option value="GP08">GP08</option>
                                     <option value="GP09">GP09</option>
                                   </select>
-                                  {errors.maNhom && touched.maNhom ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.maNhom}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
                                 </div>
-                                <div class="mb-3">
-                                  <label for="" class="form-label">
-                                    Mã loại người dùng
-                                  </label>
-                                  <select
-                                    class="form-select form-select-lg"
-                                    name="maLoaiNguoiDung"
-                                    id="maLoaiNguoiDung"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.maLoaiNguoiDung}
+                                {errors.maNhom && touched.maNhom ? (
+                                  <p className="text-danger mt-1">{errors.maNhom}</p>
+                                ) : (
+                                  ""
+                                )}
+                                <div className="btn_container_modal">
+
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
                                   >
-                                    <option value="">Mã loại người dùng</option>
-                                    <option value="HV">HV</option>
-                                    <option value="GV">GV</option>
-                                  </select>
-                                  {errors.maLoaiNguoiDung &&
-                                  touched.maLoaiNguoiDung ? (
-                                    <p className="text-danger mt-1">
-                                      {errors.maLoaiNguoiDung}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
+                                    Đóng
+                                  </button>
+                                  <button type="submit" className="btn btn-primary">
+                                    Cập nhật
+                                  </button>
                                 </div>
-                                <hr />
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary"
-                                >
-                                  Lưu thay đổi
-                                </button>
                               </form>
                             </div>
                           </div>

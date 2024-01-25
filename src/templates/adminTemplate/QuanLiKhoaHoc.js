@@ -83,16 +83,18 @@ const QuanLiKhoaHoc = () => {
   return (
     <>
       {contextHolder}
-      <div className="table-responsive">
-        <table className="table table-primary">
+      <div className="table-responsive container-fluid">
+        <table className="table table-bordered ">
           <thead>
             <tr>
+            <th scope="col">STT</th>
               <th scope="col">Mã khóa học</th>
               <th scope="col">Tên Khóa học</th>
-              <th scope="col">Số lượng hv</th>
-              <th scope="col">Mô tả</th>
+              <th scope="col">Hình ảnh</th>
+              <th scope="col">Lượt xem</th>
+              <th scope="col">Người tạo</th>
               <th scope="col">
-                <i class="fa-solid fa-gear"></i>
+                Hành động
               </th>
             </tr>
           </thead>
@@ -100,13 +102,15 @@ const QuanLiKhoaHoc = () => {
             {danhSachKhoaHoc.items?.map((item, index) => {
               return (
                 <tr className="">
-                  <td scope="row">{item.maKhoaHoc}</td>
+                  <td>{index+1}</td>
+                  <td>{item.maKhoaHoc}</td>
                   <td>{item.tenKhoaHoc}</td>
-                  <td>{item.soLuongHocVien}</td>
-                  <td>{item.moTa}</td>
-                  <td>
+                  <td><img src={item.hinhAnh} alt="" /></td>
+                  <td>{item.luotXem}</td>
+                  <td>{item.nguoiTao.hoTen}</td>
+                  <td className="btn_container">
                     <button className="btn">
-                      <i class="fa-solid fa-user-pen"></i>
+                    <i class="fa-solid fa-book"></i>
                     </button>
                     <button
                       className="btn"
@@ -123,7 +127,7 @@ const QuanLiKhoaHoc = () => {
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                       >
-                        <i class="fa-solid fa-wrench"></i>
+                        <i class="fa-solid fa-pen-to-square"></i>
                       </button>
                       <div
                         className="modal fade"

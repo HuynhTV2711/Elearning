@@ -13,7 +13,7 @@ export const quanLiKhoaHocServ ={
         return https.get(`/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}&MaNhom=GP01`)
     },
     layDanhSachKhoaHocPhanTrang: (page)=>{
-        return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?page=${page}&pageSize=7&MaNhom=GP01`)
+        return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?page=${page}&pageSize=9&MaNhom=GP01`)
     },
     layThongTinHocVienKhoaHoc: (maKhoaHoc)=>{
         return https.get(`/api/QuanLyKhoaHoc/LayThongTinHocVienKhoaHoc?maKhoaHoc=${maKhoaHoc}`)
@@ -26,5 +26,11 @@ export const quanLiKhoaHocServ ={
     },
     huyGhiDanh: (data)=>{
         return https.post("/api/QuanLyKhoaHoc/HuyGhiDanh", data)
+    },
+    danhSachKhoaHocDaDuyet:(data) =>{
+        return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet`, data)
+    },
+    danhSachKhoaHocChoXetDuyet: (data)=>{
+        return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet`, data)
     }
 }
