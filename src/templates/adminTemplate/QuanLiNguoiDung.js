@@ -3,10 +3,9 @@ import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 import Pagination from "react-bootstrap/Pagination";
 import { message } from "antd";
 import { useFormik } from "formik";
-import { validationUser } from "../../utils/validation";
+import { validationUpdate } from "../../utils/validation";
 import { useNavigate } from "react-router-dom";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
-import { date } from "yup";
 
 const QuanLiNguoiDung = () => {
   let valueTaiKhoan = (taiKhoan) => {
@@ -67,7 +66,7 @@ let huyGhiDanh = (data)=>{
     const value = event.target.value;
     setSelectedValue(value);
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [danhSachNguoiDung, setDanhSachNguoiDung] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -157,6 +156,7 @@ let huyGhiDanh = (data)=>{
     quanLiNguoiDungServ
       .capNhatThongTinNguoiDung(values)
       .then((result) => {
+        console.log(result);
         messageApi.open({
           type: "success",
           content: "Cập nhật thành công",
@@ -170,15 +170,15 @@ let huyGhiDanh = (data)=>{
         });
       });
   }
-  const themNguoiDung = (values) => {
-    quanLiNguoiDungServ
-      .register(values)
-      .then((result) => {
-        console.log(result);
-      }).catch((err) => {
-        console.log(err);
-      });
-  }
+  // const themNguoiDung = (values) => {
+  //   quanLiNguoiDungServ
+  //     .register(values)
+  //     .then((result) => {
+  //       console.log(result);
+  //     }).catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   const {
     handleSubmit,
     handleChange,
@@ -201,15 +201,10 @@ let huyGhiDanh = (data)=>{
 
     onSubmit: (values) => {
       console.log(values);
-      let checkUser = danhSachNguoiDung.items.find((item) => item.taiKhoan === values.taiKhoan);
-      if (checkUser) {
-        capNhatThongTinNguoiDung(values);
-      } else {
-        themNguoiDung(values);
-      }
+      capNhatThongTinNguoiDung(values);
     },
-    validationSchema: validationUser
-  });
+    // validationSchema: validationUpdate
+  })
   return (
     <>
       {contextHolder}
@@ -554,7 +549,7 @@ let huyGhiDanh = (data)=>{
                                   >
                                     Đóng
                                   </button>
-                                  <button type="submit" className="btn btn-primary">
+                                  <button type="submit" className="btn btn-primary" on>
                                     Cập nhật
                                   </button>
                                 </div>

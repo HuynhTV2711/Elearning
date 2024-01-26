@@ -16,3 +16,13 @@ export const validationRegister = Yup.object({
       maNhom: Yup.string().required("Vui lòng chọn mã nhóm"),
       hoTen:Yup.string().required("Vui lòng không bỏ trống"),
 })
+
+export const validationUpdate = Yup.object({
+  taiKhoan: Yup.string().required("Vui lòng không bỏ trống"),
+      matKhau: Yup.string().required("Vui lòng nhập mật khẩu"),
+      email: Yup.string().required("Vui lòng không bỏ trống"),
+      soDt: Yup.string().required("Vui lòng không bỏ trống"),
+      maNhom: Yup.string().required("Vui lòng chọn mã nhóm"),
+      maLoaiNguoiDung: Yup.string().required("Vui lòng chọn loại người dùng"),
+      hoTen:Yup.string().required("Vui lòng không bỏ trống"),
+})
