@@ -14,13 +14,14 @@ const userSlice = createSlice({
     state.user = action.payload
   },
     getAllUser: (state, action)=>{
+      console.log(action);
       state.listUser  = action.payload;
     },
 
 }
 });
 
-export const {saveInforUser, getAllUser, getAllUserPhanTrang} = userSlice.actions
+export const {saveInforUser, getAllUser} = userSlice.actions
 export default userSlice.reducer
 
 export const getAllUserApi = (page)=>{

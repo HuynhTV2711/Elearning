@@ -2,24 +2,20 @@ import React, { useEffect, useState } from "react";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import Pagination from "react-bootstrap/Pagination";
 import { message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCourseApi } from "../../redux/slice/courseSlice";
 
 const QuanLiKhoaHoc = () => {
+  let [page, setPage] = useState(1);
+  let [isDelete, setIsDelete] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
-  const [danhSachKhoaHoc, setDanhSachKhoaHoc] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const layDanhSachKhoaHoc = (currentPage) => {
-    quanLiKhoaHocServ
-      .layDanhSachKhoaHocPhanTrang(currentPage)
-      .then((result) => {
-        console.log(result);
-        setDanhSachKhoaHoc(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  let { listCourse } = useSelector((state) => state.courseSlice);
+  console.log(listCourse);
+  const dispatch = useDispatch();
+  useEffect(() => {
+      const actionThunk = getAllCourseApi(page);
+      dispatch(actionThunk);
+  }, [page, isDelete])
   const xoaKhoaHoc = (maKhoaHoc) => {
     quanLiKhoaHocServ
       .xoaKhoaHoc(maKhoaHoc)
@@ -28,7 +24,7 @@ const QuanLiKhoaHoc = () => {
           type: "success",
           content: result.data,
         });
-        layDanhSachKhoaHoc(currentPage);
+        setIsDelete(!isDelete)
       })
       .catch((err) => {
         messageApi.open({
@@ -37,42 +33,30 @@ const QuanLiKhoaHoc = () => {
         });
       });
   };
-  useEffect(() => {
-    layDanhSachKhoaHoc(currentPage);
-  }, []);
-  const itemsPerPage = 7;
-  const totalItems = danhSachKhoaHoc.totalCount;
+  const itemsPerPage = 9;
+  const totalItems = listCourse.totalCount;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const handleClick = (currentPage) => {
-    setCurrentPage(currentPage);
-    layDanhSachKhoaHoc(currentPage);
-  };
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 7;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
 
     for (let i = 1; i <= totalPages; i++) {
-      const isCurrentPage = i === currentPage;
+      const ispage = i === page;
 
       if (
         i === 1 ||
         i === totalPages ||
-        (i >= currentPage - halfVisiblePages &&
-          i <= currentPage + halfVisiblePages)
+        (i >= page - halfVisiblePages && i <= page + halfVisiblePages)
       ) {
         pageNumbers.push(
-          <Pagination.Item
-            key={i}
-            active={isCurrentPage}
-            onClick={() => handleClick(i)}
-          >
+          <Pagination.Item key={i} active={ispage} onClick={() => setPage(i)}>
             {i}
           </Pagination.Item>
         );
       } else if (
-        i === currentPage - halfVisiblePages - 1 ||
-        i === currentPage + halfVisiblePages + 1
+        i === page - halfVisiblePages - 1 ||
+        i === page + halfVisiblePages + 1
       ) {
         pageNumbers.push(<Pagination.Ellipsis key={i} />);
       }
@@ -99,7 +83,7 @@ const QuanLiKhoaHoc = () => {
             </tr>
           </thead>
           <tbody>
-            {danhSachKhoaHoc.items?.map((item, index) => {
+            {listCourse.items?.map((item, index) => {
               return (
                 <tr className="">
                   <td>{index+1}</td>
@@ -179,21 +163,21 @@ const QuanLiKhoaHoc = () => {
           {/* <Pagination>{items}</Pagination> */}
           <Pagination>
             <Pagination.First
-              onClick={() => handleClick(1)}
-              disabled={currentPage === 1}
+              onClick={() => setPage(1)}
+              disabled={page === 1}
             />
             <Pagination.Prev
-              onClick={() => handleClick(currentPage - 1)}
-              disabled={currentPage === 1}
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
             />
             {renderPageNumbers()}
             <Pagination.Next
-              onClick={() => handleClick(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => setPage(page + 1)}
+              disabled={page === totalPages}
             />
             <Pagination.Last
-              onClick={() => handleClick(totalPages)}
-              disabled={currentPage === totalPages}
+              onClick={() => setPage(totalPages)}
+              disabled={page === totalPages}
             />
           </Pagination>
         </div>
