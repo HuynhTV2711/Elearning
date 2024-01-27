@@ -31,7 +31,7 @@ function App() {
         </Route>
         <Route element={<Login/>} path="login"/>
         <Route element={<RegisterPage/>} path="register"/>
-        <Route element={<Page404/>} path="404page"/>
+        <Route element={<Page404/>} path="*"/>
       </Routes>
     </>
   );
