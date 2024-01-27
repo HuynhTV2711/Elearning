@@ -13,7 +13,6 @@ const QuanLiNguoiDung = () => {
   let [page, setPage] = useState(1);
   let [taiKhoanHuy, setTaiKhoanHuy] = useState("");
   let [isChange, setIsChange] = useState(true);
-  let [isDelete, setIsDelete] = useState(true);
   let { listUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -53,6 +52,7 @@ const QuanLiNguoiDung = () => {
           type: "success",
           content: result.data,
         });
+        danhSachKhoaHocDaDuyet(valueTaiKhoan(taiKhoanHuy));
       })
       .catch((err) => {
         messageApi.open({
@@ -155,7 +155,7 @@ const QuanLiNguoiDung = () => {
           type: "success",
           content: "Cập nhật thành công",
         });
-        setIsChange(!isChange)
+        setIsChange(!isChange);
       })
       .catch((err) => {
         console.log(err);
@@ -228,7 +228,7 @@ const QuanLiNguoiDung = () => {
                         danhSachKhoaHocChoXetDuyet(
                           valueTaiKhoan(item.taiKhoan)
                         );
-                        setTaiKhoanHuy(item.taiKhoan)
+                        setTaiKhoanHuy(item.taiKhoan);
                       }}
                     >
                       <i class="fa-solid fa-book"></i>
@@ -286,7 +286,6 @@ const QuanLiNguoiDung = () => {
                                 className="btn_green"
                                 onClick={() => {
                                   dataGhiDanh.taiKhoan = item.taiKhoan;
-                                  console.log(dataGhiDanh);
                                   quanLiKhoaHocServ
                                     .ghiDanhKhoaHoc(dataGhiDanh)
                                     .then((result) => {
@@ -295,6 +294,9 @@ const QuanLiNguoiDung = () => {
                                         type: "success",
                                         content: result.data,
                                       });
+                                      danhSachKhoaHocDaDuyet(
+                                        valueTaiKhoan(taiKhoanHuy)
+                                      );
                                     })
                                     .catch((err) => {
                                       messageApi.open({
