@@ -4,6 +4,7 @@ import Pagination from "react-bootstrap/Pagination";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCourseApi } from "../../redux/slice/courseSlice";
+import { renderPageNumbers } from "../../utils/pagination";
 
 const QuanLiKhoaHoc = () => {
   let [page, setPage] = useState(1);
@@ -33,37 +34,8 @@ const QuanLiKhoaHoc = () => {
         });
       });
   };
-  const itemsPerPage = 9;
-  const totalItems = listCourse.totalCount;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const maxVisiblePages = 7;
-    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
-    for (let i = 1; i <= totalPages; i++) {
-      const ispage = i === page;
-
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= page - halfVisiblePages && i <= page + halfVisiblePages)
-      ) {
-        pageNumbers.push(
-          <Pagination.Item key={i} active={ispage} onClick={() => setPage(i)}>
-            {i}
-          </Pagination.Item>
-        );
-      } else if (
-        i === page - halfVisiblePages - 1 ||
-        i === page + halfVisiblePages + 1
-      ) {
-        pageNumbers.push(<Pagination.Ellipsis key={i} />);
-      }
-    }
-
-    return pageNumbers;
-  };
+  const totalPages = listCourse.totalPages;
+  let phanTrang = renderPageNumbers(page, totalPages, setPage)
   return (
     <>
       {contextHolder}
@@ -160,8 +132,7 @@ const QuanLiKhoaHoc = () => {
           </tbody>
         </table>
         <div className="d-flex justify-content-end mt-4">
-          {/* <Pagination>{items}</Pagination> */}
-          <Pagination>
+        <Pagination>
             <Pagination.First
               onClick={() => setPage(1)}
               disabled={page === 1}
@@ -170,7 +141,7 @@ const QuanLiKhoaHoc = () => {
               onClick={() => setPage(page - 1)}
               disabled={page === 1}
             />
-            {renderPageNumbers()}
+            {phanTrang}
             <Pagination.Next
               onClick={() => setPage(page + 1)}
               disabled={page === totalPages}

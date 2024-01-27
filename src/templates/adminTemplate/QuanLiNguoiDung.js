@@ -7,6 +7,7 @@ import { validationUpdate } from "../../utils/validation";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserApi } from "../../redux/slice/userSlice";
+import { renderPageNumbers } from "../../utils/pagination";
 
 const QuanLiNguoiDung = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -114,37 +115,8 @@ const QuanLiNguoiDung = () => {
   }, []);
 
   /**Phaan trang */
-  const itemsPerPage = 7;
-  const totalItems = listUser.totalCount;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const maxVisiblePages = 7;
-    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
-    for (let i = 1; i <= totalPages; i++) {
-      const ispage = i === page;
-
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= page - halfVisiblePages && i <= page + halfVisiblePages)
-      ) {
-        pageNumbers.push(
-          <Pagination.Item key={i} active={ispage} onClick={() => setPage(i)}>
-            {i}
-          </Pagination.Item>
-        );
-      } else if (
-        i === page - halfVisiblePages - 1 ||
-        i === page + halfVisiblePages + 1
-      ) {
-        pageNumbers.push(<Pagination.Ellipsis key={i} />);
-      }
-    }
-
-    return pageNumbers;
-  };
+  const totalPages = listUser.totalPages;
+  let phanTrang = renderPageNumbers(page, totalPages, setPage)
   /**Caapj nhatj */
   const capNhatThongTinNguoiDung = (values) => {
     quanLiNguoiDungServ
@@ -649,7 +621,7 @@ const QuanLiNguoiDung = () => {
           </tbody>
         </table>
         <div className="d-flex justify-content-end mt-4">
-          <Pagination>
+        <Pagination>
             <Pagination.First
               onClick={() => setPage(1)}
               disabled={page === 1}
@@ -658,7 +630,7 @@ const QuanLiNguoiDung = () => {
               onClick={() => setPage(page - 1)}
               disabled={page === 1}
             />
-            {renderPageNumbers()}
+            {phanTrang}
             <Pagination.Next
               onClick={() => setPage(page + 1)}
               disabled={page === totalPages}
