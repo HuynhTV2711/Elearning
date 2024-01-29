@@ -13,6 +13,7 @@ import QuanLiNguoiDung from "./templates/adminTemplate/QuanLiNguoiDung";
 import QuanLiKhoaHoc from "./templates/adminTemplate/QuanLiKhoaHoc";
 import ThongTinCaNhan from './pages/ThongTinCaNhan/ThongTinCaNhan';
 import ThemNguoiDung from './templates/adminTemplate/ThemNguoiDung';
+import ThemKhoaHoc from './templates/adminTemplate/ThemKhoaHoc';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route element={<QuanLiNguoiDung/>} index/>
           <Route element={<QuanLiKhoaHoc/>} path="quanlikhoahoc"/>
           <Route element={<ThemNguoiDung/>} path='themnguoidung'/>
+          <Route element={<ThemKhoaHoc/>} path='themkhoahoc'/>
         </Route>
         <Route element={<Login/>} path="login"/>
         <Route element={<RegisterPage/>} path="register"/>

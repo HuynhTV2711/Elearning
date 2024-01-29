@@ -31,25 +31,39 @@ header{
     .logo{
         cursor: pointer;
     }
-    .header_action{
+    .header_infor{
         display: flex;
-        justify-content: start;
-        align-items: center;
-        p{
-            color: $accent_color;
-            margin-right: 5px;
-            margin-bottom: 0;
+        gap: 10px;
+        .header_action{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            p{
+                color: $accent_color;
+                margin-right: 5px;
+                margin-bottom: 0;
+            }
+            a{
+                color: $secondary_color;
+            }
+            a:hover{
+                color: $accent_color;
+                transition: all 1s !important;
+                cursor: pointer;
+            }
+            .popup {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+    
         }
-        a{
-            color: $secondary_color;
-        }
-        a:hover{
-            color: $accent_color;
-            transition: all 1s !important;
-            cursor: pointer;
-        }
-
     }
+    
     .form_search{
         display: flex;
         button{

@@ -18,7 +18,7 @@ const DanhSachKhoaHoc = () => {
   const totalPages = listCourse.totalPages;
   let phanTrang = renderPageNumbers(page, totalPages, setPage)
   return (
-    <div className="danh_sach_khoa_hoc">
+    <div className="danh_sach_khoa_hoc" id="dskh">
       <div className="container">
         <h2 className="text-center title">
           <i class="fa-solid fa-list me-3"></i>Danh sách khóa học

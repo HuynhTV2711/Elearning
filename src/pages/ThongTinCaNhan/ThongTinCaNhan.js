@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { message } from "antd";
 import { quanLiKhoaHocServ } from '../../services/quanLiKhoaHocServ';
 import { getLocal, saveLocal } from '../../utils/local';
-import { saveInforUser } from '../../redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -55,7 +54,7 @@ const ThongTinCaNhan = () => {
         });
     }
     
-    const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
+    const { handleSubmit, handleChange, handleBlur, values, errors, touched, setValues } =
         useFormik({
             initialValues: {
                 hoTen: "",
@@ -128,7 +127,7 @@ const ThongTinCaNhan = () => {
                             </div>
                         </div>
                         <div>
-                            <button type="button" className="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" className="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{setValues(thongTinCaNhan)}}>
                                 Cập nhật thông tin
                             </button>
                             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -84,13 +84,18 @@ const Header = () => {
             </form>
               </li>
             </ul>
-            <div >
-            {user ? (<div className="header_action"><p className="text-blue-400 text-sm mr-3" onClick={() => { navigate(`thongtincanhan`) }}>{user.hoTen}</p> 
+            <div className="header_infor" >
+            {user.maLoaiNguoiDung == 'GV' ? (<div className="header_action"><a onClick={() => { navigate(`admin`) }}>
+            <i class="fa-solid fa-gear"></i>
+              </a></div>) : (<div></div>)} 
+            {user ? (<div className="header_action"> <div class="popup">Đây là nội dung của popup.</div><p className="text-sm mr-3" onClick={() => { navigate(`thongtincanhan`) }}>
+              <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-52.jpg" alt="" width={40} height={40} style={{borderRadius:"50%", objectFit:"cover", border: "1px solid #fff", cursor:"pointer"}} /></p> 
             <a onClick={() => { navigate(`login`) }}>
                 Logout
-              </a></div> ) : (<a onClick={() => { navigate(`login`) }}>
+              </a></div> ) : (<div className="header_action"><a onClick={() => { navigate(`login`) }}>
                 Login
-              </a>)}
+              </a></div>)}
+              
             </div>
           </div>
         </div>

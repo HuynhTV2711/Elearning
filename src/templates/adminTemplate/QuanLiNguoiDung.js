@@ -66,6 +66,7 @@ const QuanLiNguoiDung = () => {
   const [selectedValue, setSelectedValue] = useState("");
   let dataGhiDanh = {
     maKhoaHoc: selectedValue,
+    taiKhoan: taiKhoanHuy
   };
   let valueTaiKhoan = (taiKhoan) => {
     return {
@@ -89,7 +90,6 @@ const QuanLiNguoiDung = () => {
     quanLiKhoaHocServ
       .danhSachKhoaHocDaDuyet(data)
       .then((result) => {
-        console.log(result);
         setKhDaGhiDanh(result.data);
       })
       .catch((err) => {
@@ -257,11 +257,9 @@ const QuanLiNguoiDung = () => {
                               <button
                                 className="btn_green"
                                 onClick={() => {
-                                  dataGhiDanh.taiKhoan = item.taiKhoan;
                                   quanLiKhoaHocServ
                                     .ghiDanhKhoaHoc(dataGhiDanh)
                                     .then((result) => {
-                                      console.log(result);
                                       messageApi.open({
                                         type: "success",
                                         content: result.data,
@@ -621,7 +619,7 @@ const QuanLiNguoiDung = () => {
           </tbody>
         </table>
         <div className="d-flex justify-content-end mt-4">
-        <Pagination>
+           <Pagination>
             <Pagination.First
               onClick={() => setPage(1)}
               disabled={page === 1}

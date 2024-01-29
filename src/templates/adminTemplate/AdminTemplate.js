@@ -79,6 +79,11 @@ const AdminTemplate = () => {
               icon: <FormOutlined />,
               label: <Link to={'/admin/quanlikhoahoc'}>Quản lí khóa học</Link>,
             },
+            {
+              key: '5',
+              icon: <FormOutlined />,
+              label: <Link to={'/admin/themkhoahoc'}>Thêm khóa học</Link>,
+            },
             
           ]}
         />

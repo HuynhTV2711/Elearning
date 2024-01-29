@@ -1,6 +1,5 @@
 import Pagination from "react-bootstrap/Pagination";
-
-const renderPageNumbers = (page, totalPages,setPage) => {
+const renderPageNumbers = (page, totalPages, setPage) => {
     const pageNumbers = [];
     const maxVisiblePages = 7;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
