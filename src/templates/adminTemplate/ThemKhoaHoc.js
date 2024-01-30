@@ -217,7 +217,7 @@ const ThemKhoaHoc = () => {
                 ""
               )}
               <button type="submit" className="btn btn-primary">
-                Thêm người dùng
+                Thêm khóa học
               </button>
             </form>
           </div>

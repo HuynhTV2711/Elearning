@@ -1,4 +1,17 @@
 .quan_li{
+    padding: 0 0 0 0 !important;
+    min-height: 100vh !important;
+    .row{
+        padding: 0 0 0 0 !important;
+        margin: 0 0 0 0 !important;
+    }
+    .row > *{
+        padding: 0 0 0 0 !important;
+
+    }
+    .ant-layout {
+        min-height: 100vh;
+    }
     a{
         text-decoration: none;
     }
