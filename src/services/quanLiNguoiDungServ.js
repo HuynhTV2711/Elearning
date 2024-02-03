@@ -20,5 +20,13 @@ export const quanLiNguoiDungServ ={
     },
     capNhatThongTinNguoiDung:(data)=>{
         return https.put(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, data)
+    },
+    layDanhSachHocVienChoXetDuyet: (data)=>{
+        return https.post(`/api/QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet`, data)
+    },
+    layDanhSachHocVienKhoaHoc: (data)=>{
+        return https.post(`/api/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc`, data)
     }
 }
+
+

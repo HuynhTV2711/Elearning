@@ -12,6 +12,8 @@ const QuanLiKhoaHoc = () => {
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   let [page, setPage] = useState(1);
   let [isDelete, setIsDelete] = useState(true);
+  let [dshvChoDuyet, setDSHVChoDuyet]= useState([]);
+  let [dshvThamGia, setDSHVThamGia]= useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   // Lấy danh sách kh phân trang
   let { listCourse } = useSelector((state) => state.courseSlice);
@@ -31,7 +33,7 @@ const QuanLiKhoaHoc = () => {
         console.log(err);
       });
   }, []);
-// Xóa khóa học
+  // Xóa khóa học
   const xoaKhoaHoc = (maKhoaHoc) => {
     quanLiKhoaHocServ
       .xoaKhoaHoc(maKhoaHoc)
@@ -49,11 +51,37 @@ const QuanLiKhoaHoc = () => {
         });
       });
   };
-
+// layDanhSachHocVienChoXetDuyet
+let valueKhoaHoc = (maKhoaHoc) => {
+  return {
+    maKhoaHoc: maKhoaHoc,
+  };
+};
+let layDSHocVienChoXetDuyet = (data)=>{
+  quanLiNguoiDungServ
+  .layDanhSachHocVienChoXetDuyet(data)
+  .then((result) => {
+    console.log(result);
+    setDSHVChoDuyet(result.data)
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+// layDanhSachHocVienKhoaHoc
+let layDSHocVienKhoaHoc = (data)=>{
+  quanLiNguoiDungServ
+  .layDanhSachHocVienKhoaHoc(data)
+  .then((result) => {
+    setDSHVThamGia(result.data)
+    console.log(result);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
   // Phân trang
   const totalPages = listCourse.totalPages;
   let phanTrang = renderPageNumbers(page, totalPages, setPage);
-// formik
+  // formik
   const formik = useFormik({
     initialValues: {
       maKhoaHoc: "",
@@ -71,19 +99,20 @@ const QuanLiKhoaHoc = () => {
     onSubmit: (values) => {
       console.log(values);
       quanLiKhoaHocServ
-      .capNhatKhoaHoc(values)
-      .then((result) => {
-        messageApi.open({
-          type: "success",
-          content: "Cập nhật thành công",
+        .capNhatKhoaHoc(values)
+        .then((result) => {
+          messageApi.open({
+            type: "success",
+            content: "Cập nhật thành công",
+          });
+          setIsDelete(!isDelete);
+        })
+        .catch((err) => {
+          messageApi.open({
+            type: "error",
+            content: "Thất bại vui lòng thử lại",
+          });
         });
-        setIsDelete(!isDelete);
-      }).catch((err) => {
-        messageApi.open({
-          type: "error",
-          content: "Thất bại vui lòng thử lại",
-        });
-      });
     },
     // validationSchema: validationRegister,
   });
@@ -127,9 +156,133 @@ const QuanLiKhoaHoc = () => {
                   <td>{item.luotXem}</td>
                   <td>{item.nguoiTao.hoTen}</td>
                   <td className="btn_container">
-                    <button className="btn">
+                    <button
+                      className="btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      onClick={()=>{
+                        console.log(item.maKhoaHoc);
+                        layDSHocVienChoXetDuyet(valueKhoaHoc(item.maKhoaHoc))
+                        layDSHocVienKhoaHoc(valueKhoaHoc(item.maKhoaHoc))
+                      }}
+                    >
                       <i class="fa-solid fa-book"></i>
                     </button>
+                    <div
+                      className="modal fade modal-md"
+                      id="exampleModal"
+                      tabIndex={-1}
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h1
+                              className="modal-title fs-5"
+                              id="exampleModalLabel"
+                            >
+                              Ghi danh
+                            </h1>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            />
+                          </div>
+                          <div class="modal-body">
+                            <div className="modal_ghi_danh">
+                              <h6>Chọn người dùng</h6>
+                              <div class="mb-3">
+                                <form>
+                                  <select
+                                    class="form-select"
+                                    name=""
+                                    id=""
+                                    // value={selectedValue}
+                                    // onChange={handleSelectChange}
+                                  >
+                                    <option selected>Chọn người dùng</option>
+                                  </select>
+                                </form>
+                              </div>
+
+                              <button className="btn_green">Ghi danh</button>
+                            </div>
+                            <hr />
+                            <div className="modal_xac_thuc">
+                              <h6>Học viên chờ xác thực</h6>
+                              <table className="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên học viên</th>
+                                    <th scope="col">Chờ xác nhận</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {dshvChoDuyet?.map((kh, index) => {
+                                    return (
+                                      <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{kh.hoTen}</td>
+                                        <td>
+                                          <button className="btn_green">
+                                            Xác nhận
+                                          </button>
+                                          <button className="btn_xoa">
+                                            Xóa
+                                          </button>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            </div>
+                            <hr />
+                            <div className="modal_da_ghi_danh">
+                              <h6>Học viên đã tham gia khóa học</h6>
+                              <table className="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên học viên</th>
+                                    <th scope="col">Hủy ghi danh</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {dshvThamGia?.map((khgh, index) => {
+                                    return (
+                                      <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{khgh.hoTen}</td>
+                                        <td>
+                                          <button
+                                            className="btn_xoa"
+                                            // onClick={() => {
+                                            //   huyGhiDanh(
+                                            //     valueHuy(
+                                            //       khgh.maKhoaHoc,
+                                            //       item.taiKhoan
+                                            //     )
+                                            //   );
+                                            // }}
+                                          >
+                                            Xóa
+                                          </button>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <button
                       className="btn"
                       onClick={() => {

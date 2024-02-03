@@ -333,6 +333,7 @@ const QuanLiNguoiDung = () => {
                                             taiKhoanHuy
                                           )
                                         );
+                                        danhSachKhoaHocChoXetDuyet(valueTaiKhoan(taiKhoanHuy));
                                       }
                                     
                                     }
