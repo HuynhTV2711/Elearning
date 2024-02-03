@@ -54,6 +54,7 @@ const QuanLiNguoiDung = () => {
           content: result.data,
         });
         danhSachKhoaHocDaDuyet(valueTaiKhoan(taiKhoanHuy));
+        danhSachKhoaHocChoXetDuyet(valueTaiKhoan(taiKhoanHuy));
       })
       .catch((err) => {
         messageApi.open({
@@ -291,16 +292,56 @@ const QuanLiNguoiDung = () => {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
+                                  {dskhChoDuyet?.map((kh,index)=>{
+                                    return <tr>
+                                    <th scope="row">{index +1}</th>
+                                    <td>{kh.tenKhoaHoc}</td>
                                     <td>
-                                      <button className="btn_green">
+                                      <button className="btn_green" onClick={()=>{
+                                        let dataXacNhan = {
+                                          maKhoaHoc: kh.maKhoaHoc,
+                                          taiKhoan: taiKhoanHuy
+                                        };
+                                         quanLiKhoaHocServ
+                                         .ghiDanhKhoaHoc(dataXacNhan)
+                                         .then((result) => {
+                                           messageApi.open({
+                                             type: "success",
+                                             content: result.data,
+                                           });
+                                           danhSachKhoaHocDaDuyet(
+                                            valueTaiKhoan(taiKhoanHuy)
+                                          );
+                                           danhSachKhoaHocChoXetDuyet(valueTaiKhoan(taiKhoanHuy));
+                                         })
+                                         .catch((err) => {
+                                           messageApi.open({
+                                             type: "error",
+                                             content: "Thất bại vui lòng thử lại",
+                                           });
+                                         });
+                                     }
+                                    }
+                                       >
                                         Xác nhận
                                       </button>
-                                      <button className="btn_xoa">Xóa</button>
+                                      <button className="btn_xoa" 
+                                      onClick={() => {
+                                        huyGhiDanh(
+                                          valueHuy(
+                                            kh.maKhoaHoc,
+                                            taiKhoanHuy
+                                          )
+                                        );
+                                      }
+                                    
+                                    }
+                                      >Xóa</button>
                                     </td>
                                   </tr>
+                                  })
+                                  }
+                                  
                                 </tbody>
                               </table>
                             </div>

@@ -6,20 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCourseApi } from "../../redux/slice/courseSlice";
 import { renderPageNumbers } from "../../utils/pagination";
 import { useFormik } from "formik";
+import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 
 const QuanLiKhoaHoc = () => {
-  const [image, setImage] = useState("");
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   let [page, setPage] = useState(1);
   let [isDelete, setIsDelete] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
+  // Lấy danh sách kh phân trang
   let { listCourse } = useSelector((state) => state.courseSlice);
-  console.log(listCourse);
   const dispatch = useDispatch();
   useEffect(() => {
     const actionThunk = getAllCourseApi(page);
     dispatch(actionThunk);
   }, [page, isDelete]);
+  // Lấy danh mục khóa học
   useEffect(() => {
     quanLiKhoaHocServ
       .layDanhMucKhoaHoc()
@@ -30,7 +31,7 @@ const QuanLiKhoaHoc = () => {
         console.log(err);
       });
   }, []);
-
+// Xóa khóa học
   const xoaKhoaHoc = (maKhoaHoc) => {
     quanLiKhoaHocServ
       .xoaKhoaHoc(maKhoaHoc)
@@ -48,9 +49,11 @@ const QuanLiKhoaHoc = () => {
         });
       });
   };
+
+  // Phân trang
   const totalPages = listCourse.totalPages;
   let phanTrang = renderPageNumbers(page, totalPages, setPage);
-
+// formik
   const formik = useFormik({
     initialValues: {
       maKhoaHoc: "",
@@ -404,8 +407,6 @@ const QuanLiKhoaHoc = () => {
                                       let img = event.target.files[0];
                                       if (img) {
                                         const urlImg = URL.createObjectURL(img);
-                                        // console.log(urlImg);
-                                        setImage(urlImg);
                                       }
                                       setFieldValue(
                                         "hinhAnh",
