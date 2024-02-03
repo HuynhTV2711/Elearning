@@ -27,15 +27,15 @@ const AdminTemplate = () => {
   const location = useLocation();
   useEffect(() => {
     if (user) {
-      if (user.maLoaiNguoiDung != "GV") {
+      if (user.maLoaiNguoiDung !== "GV") {
         messageApi.open({
           type: "error",
           content: "Vui lòng đăng nhập tài khoản quản trị viên",
         });
-        setTimeout(() => {
+        // setTimeout(() => {
           // đưa về đường dẫn web bạn muốn
           window.location.href = "/login";
-        }, 2000);
+        // }, 50);
       }
     }
     // chưa đăng nhập

@@ -16,7 +16,7 @@ const ChiTietKhoaHoc = () => {
   };
   const ghiDanhKhoaHoc = (a) => {
     quanLiKhoaHocServ
-      .ghiDanhKhoaHoc(a)
+      .dangKyKhoaHoc(a)
       .then((result) => {
         console.log(result);
         messageApi.open({
@@ -28,7 +28,7 @@ const ChiTietKhoaHoc = () => {
         console.log(err);
         messageApi.open({
           type: "error",
-          content: "Thất bại vui lòng thử lại",
+          content: err.response.data,
         });
       });
   };
@@ -143,6 +143,7 @@ const ChiTietKhoaHoc = () => {
                             className="btn btn-primary"
                             data-bs-dismiss="modal"
                             onClick={() => {
+                              console.log(data);
                               ghiDanhKhoaHoc(data);
                             }}
                           >
