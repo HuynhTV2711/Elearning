@@ -8,7 +8,6 @@ const Header = () => {
   const {user} = useSelector((state)=>{
     return state.userSlice
    })
-   console.log(user);
   const navigate = useNavigate();
   const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   useEffect(()=>{

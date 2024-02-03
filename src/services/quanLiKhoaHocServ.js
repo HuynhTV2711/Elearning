@@ -35,5 +35,17 @@ export const quanLiKhoaHocServ ={
     },
     danhSachKhoaHocChoXetDuyet: (data)=>{
         return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet`, data)
+    },
+    themKhoaHoc:(data) =>{
+        return https.post(`/api/QuanLyKhoaHoc/ThemKhoaHoc`, data)
+    },
+    capNhatKhoaHoc: (data)=>{
+        return https.put(`/api/QuanLyKhoaHoc/CapNhatKhoaHoc`, data)
+    },
+    themKhoaHocUploadHinh: (data)=>{
+        return https.post(`/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh`, data)
+    },
+    capNhatKhoaHocUploadHinh: (data)=>{
+        return https.post(`/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload`, data)
     }
 }
