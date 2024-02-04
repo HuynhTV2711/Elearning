@@ -3,35 +3,37 @@ import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import Pagination from "react-bootstrap/Pagination";
 import { DatePicker, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCourseApi } from "../../redux/slice/courseSlice";
+import { getAllCourseApi, layDanhMucKhoaHocAPI } from "../../redux/slice/courseSlice";
 import { renderPageNumbers } from "../../utils/pagination";
 import { useFormik } from "formik";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
+import { layDanhSachHocVien } from "../../redux/slice/userSlice";
 
 const QuanLiKhoaHoc = () => {
-  const [danhMucKhoaHoc, setDanhMucKhoaHoc] = useState([]);
   let [page, setPage] = useState(1);
   let [isDelete, setIsDelete] = useState(true);
+  let [khoaHoc, setKhoaHoc] = useState("");
   let [dshvChoDuyet, setDSHVChoDuyet]= useState([]);
   let [dshvThamGia, setDSHVThamGia]= useState([]);
   const [messageApi, contextHolder] = message.useMessage();
+  // lay danh sach hoc vien
+  const dispatch = useDispatch();
+  let {dsHocVien} = useSelector((state)=> state.userSlice)
+  useEffect(() => {
+    const actionThunk = layDanhSachHocVien();
+    dispatch(actionThunk);
+  }, []);
   // Lấy danh sách kh phân trang
   let { listCourse } = useSelector((state) => state.courseSlice);
-  const dispatch = useDispatch();
   useEffect(() => {
     const actionThunk = getAllCourseApi(page);
     dispatch(actionThunk);
   }, [page, isDelete]);
   // Lấy danh mục khóa học
+  let { danhMucKhoaHoc } = useSelector((state) => state.courseSlice);
   useEffect(() => {
-    quanLiKhoaHocServ
-      .layDanhMucKhoaHoc()
-      .then((result) => {
-        setDanhMucKhoaHoc(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const actionThunk = layDanhMucKhoaHocAPI();
+    dispatch(actionThunk);
   }, []);
   // Xóa khóa học
   const xoaKhoaHoc = (maKhoaHoc) => {
@@ -73,11 +75,48 @@ let layDSHocVienKhoaHoc = (data)=>{
   .layDanhSachHocVienKhoaHoc(data)
   .then((result) => {
     setDSHVThamGia(result.data)
-    console.log(result);
   }).catch((err) => {
     console.log(err);
   });
 }
+  // ghi danh
+  const [selectedValue, setSelectedValue] = useState("");
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+  };
+  let dataGhiDanh = {
+    maKhoaHoc: khoaHoc,
+    taiKhoan: selectedValue
+  };
+  // huyGhiDanh
+  let valueHuy = (taiKhoan) => {
+    return {
+      taiKhoan: taiKhoan,
+      maKhoaHoc: khoaHoc,
+    };
+  };
+  let huyGhiDanh = (data) => {
+    quanLiKhoaHocServ
+      .huyGhiDanh(data)
+      .then((result) => {
+        messageApi.open({
+          type: "success",
+          content: result.data,
+        });
+        layDSHocVienKhoaHoc(
+          valueKhoaHoc(khoaHoc)
+        );
+        layDSHocVienChoXetDuyet(valueKhoaHoc(khoaHoc));
+      })
+      .catch((err) => {
+        messageApi.open({
+          type: "error",
+          content: err.response.data,
+        });
+      });
+  };
+ 
   // Phân trang
   const totalPages = listCourse.totalPages;
   let phanTrang = renderPageNumbers(page, totalPages, setPage);
@@ -164,6 +203,7 @@ let layDSHocVienKhoaHoc = (data)=>{
                         console.log(item.maKhoaHoc);
                         layDSHocVienChoXetDuyet(valueKhoaHoc(item.maKhoaHoc))
                         layDSHocVienKhoaHoc(valueKhoaHoc(item.maKhoaHoc))
+                        setKhoaHoc(item.maKhoaHoc)
                       }}
                     >
                       <i class="fa-solid fa-book"></i>
@@ -200,15 +240,43 @@ let layDSHocVienKhoaHoc = (data)=>{
                                     class="form-select"
                                     name=""
                                     id=""
-                                    // value={selectedValue}
-                                    // onChange={handleSelectChange}
+                                    value={selectedValue}
+                                    onChange={handleSelectChange}
                                   >
                                     <option selected>Chọn người dùng</option>
+                                    {dsHocVien?.map(
+                                      (hv, index) => {
+                                        return (
+                                          <option value={hv.taiKhoan}>
+                                            {hv.hoTen}
+                                          </option>
+                                        );
+                                      }
+                                    )}
                                   </select>
                                 </form>
                               </div>
 
-                              <button className="btn_green">Ghi danh</button>
+                              <button className="btn_green"
+                               onClick={() => {
+                                quanLiKhoaHocServ
+                                  .ghiDanhKhoaHoc(dataGhiDanh)
+                                  .then((result) => {
+                                    messageApi.open({
+                                      type: "success",
+                                      content: result.data,
+                                    });
+                                    layDSHocVienKhoaHoc(
+                                      valueKhoaHoc(khoaHoc)
+                                    );
+                                  })
+                                  .catch((err) => {
+                                    messageApi.open({
+                                      type: "error",
+                                      content: "Thất bại vui lòng thử lại",
+                                    });
+                                  });
+                              }}>Ghi danh</button>
                             </div>
                             <hr />
                             <div className="modal_xac_thuc">
@@ -222,16 +290,49 @@ let layDSHocVienKhoaHoc = (data)=>{
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {dshvChoDuyet?.map((kh, index) => {
+                                  {dshvChoDuyet?.map((hv, index) => {
                                     return (
                                       <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{kh.hoTen}</td>
+                                        <td>{hv.hoTen}</td>
                                         <td>
-                                          <button className="btn_green">
+                                          <button className="btn_green" onClick={()=>{
+                                        let dataXacNhan = {
+                                          maKhoaHoc: khoaHoc,
+                                          taiKhoan: hv.taiKhoan
+                                        };
+                                         quanLiKhoaHocServ
+                                         .ghiDanhKhoaHoc(dataXacNhan)
+                                         .then((result) => {
+                                           messageApi.open({
+                                             type: "success",
+                                             content: result.data,
+                                           });
+                                           layDSHocVienKhoaHoc(
+                                            valueKhoaHoc(khoaHoc)
+                                          );
+                                          layDSHocVienChoXetDuyet(valueKhoaHoc(khoaHoc));
+                                         })
+                                         .catch((err) => {
+                                           messageApi.open({
+                                             type: "error",
+                                             content: "Thất bại vui lòng thử lại",
+                                           });
+                                         });
+                                     }
+                                    }>
                                             Xác nhận
                                           </button>
-                                          <button className="btn_xoa">
+                                          <button className="btn_xoa"
+                                           onClick={() => {
+                                            huyGhiDanh(
+                                              valueHuy(
+                                                hv.taiKhoan,
+                                                khoaHoc
+                                              )
+                                            );
+                                            layDSHocVienChoXetDuyet(valueKhoaHoc(khoaHoc));
+                                          }}>
                                             Xóa
                                           </button>
                                         </td>
@@ -253,22 +354,22 @@ let layDSHocVienKhoaHoc = (data)=>{
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {dshvThamGia?.map((khgh, index) => {
+                                  {dshvThamGia?.map((hvtg, index) => {
                                     return (
                                       <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{khgh.hoTen}</td>
+                                        <td>{hvtg.hoTen}</td>
                                         <td>
                                           <button
                                             className="btn_xoa"
-                                            // onClick={() => {
-                                            //   huyGhiDanh(
-                                            //     valueHuy(
-                                            //       khgh.maKhoaHoc,
-                                            //       item.taiKhoan
-                                            //     )
-                                            //   );
-                                            // }}
+                                            onClick={() => {
+                                              huyGhiDanh(
+                                                valueHuy(
+                                                  hvtg.taiKhoan,
+                                                  item.maKhoaHoc
+                                                )
+                                              );
+                                            }}
                                           >
                                             Xóa
                                           </button>
@@ -296,7 +397,7 @@ let layDSHocVienKhoaHoc = (data)=>{
                         type="button"
                         className="btn"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
+                        data-bs-target="#modalEdit"
                         onClick={() => {
                           setValues(item);
                         }}
@@ -305,7 +406,7 @@ let layDSHocVienKhoaHoc = (data)=>{
                       </button>
                       <div
                         className="modal fade"
-                        id="exampleModal"
+                        id="modalEdit"
                         tabIndex={-1}
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"

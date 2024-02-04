@@ -14,6 +14,8 @@ const QuanLiNguoiDung = () => {
   let [page, setPage] = useState(1);
   let [taiKhoanHuy, setTaiKhoanHuy] = useState("");
   let [isChange, setIsChange] = useState(true);
+  let [khDaGhiDanh, setKhDaGhiDanh] = useState([]);
+  let [dskhChoDuyet, setDSKHChoDuyet] = useState([]);
   let { listUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -65,6 +67,10 @@ const QuanLiNguoiDung = () => {
   };
   // ghi danh
   const [selectedValue, setSelectedValue] = useState("");
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+  };
   let dataGhiDanh = {
     maKhoaHoc: selectedValue,
     taiKhoan: taiKhoanHuy
@@ -74,8 +80,8 @@ const QuanLiNguoiDung = () => {
       taiKhoan: taiKhoan,
     };
   };
-  let [khDaGhiDanh, setKhDaGhiDanh] = useState([]);
-  let [dskhChoDuyet, setDSKHChoDuyet] = useState([]);
+  
+  // danhSachKhoaHocChoXetDuyet
   const danhSachKhoaHocChoXetDuyet = (data) => {
     quanLiKhoaHocServ
       .danhSachKhoaHocChoXetDuyet(data)
@@ -87,6 +93,7 @@ const QuanLiNguoiDung = () => {
         console.log(err);
       });
   };
+  // danhSachKhoaHocDaDuyet
   const danhSachKhoaHocDaDuyet = (data) => {
     quanLiKhoaHocServ
       .danhSachKhoaHocDaDuyet(data)
@@ -98,10 +105,7 @@ const QuanLiNguoiDung = () => {
       });
   };
 
-  const handleSelectChange = (event) => {
-    const value = event.target.value;
-    setSelectedValue(value);
-  };
+ 
   // danh sach khoa hoc
   const [danhSachKhoaHoc, setDanhSachKhoaHoc] = useState([]);
   useEffect(() => {

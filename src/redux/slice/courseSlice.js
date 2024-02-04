@@ -3,6 +3,7 @@ import { quanLiKhoaHocServ } from '../../services/quanLiKhoaHocServ';
 
 const initialState = {
     listCourse:{},
+    danhMucKhoaHoc: []
 }
 
 const courseSlice = createSlice({
@@ -10,13 +11,16 @@ const courseSlice = createSlice({
   initialState,
   reducers: {
     layDsKhoaHocPhanTrang:(state, action)=>{
-        console.log(action);
+        // console.log(action);
         state.listCourse = action.payload
+    },
+    layDanhMucKhoaHoc:(state, action)=>{
+        state.danhMucKhoaHoc = action.payload
     }
   }
 });
 
-export const {layDsKhoaHocPhanTrang} = courseSlice.actions
+export const {layDsKhoaHocPhanTrang, layDanhMucKhoaHoc} = courseSlice.actions
 
 export default courseSlice.reducer
 
@@ -28,7 +32,23 @@ export const getAllCourseApi = (page)=>{
             .then((result) => {
                 const action = layDsKhoaHocPhanTrang(result.data);
                 dispatch(action)
-                console.log(result.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+  }
+
+  export const layDanhMucKhoaHocAPI = ()=>{
+    return async (dispatch, getSate)=>{
+        try {
+            quanLiKhoaHocServ
+            .layDanhMucKhoaHoc()
+            .then((result) => {
+                const action = layDanhMucKhoaHoc(result.data);
+                dispatch(action)
             }).catch((err) => {
                 console.log(err);
             });
