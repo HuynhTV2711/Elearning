@@ -3,7 +3,7 @@ import * as registerAnimation from "../../assets/animation/addcourse.json";
 import Lottie from "react-lottie";
 import { DatePicker, message } from "antd";
 import { useFormik } from "formik";
-import { validationRegister } from "../../utils/validation";
+import { validationAddCourse } from "../../utils/validation";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import { useSelector } from "react-redux";
 const ThemKhoaHoc = () => {
@@ -57,7 +57,7 @@ const ThemKhoaHoc = () => {
         });
       });
       },
-      // validationSchema: validationRegister,
+      validationSchema: validationAddCourse,
     });
     const {
       handleChange,
@@ -168,13 +168,9 @@ const ThemKhoaHoc = () => {
                     name="ngayTao"
                     format={"DD/MM/YYYY"}
                     onChange={(date, dateString) => {
-                      console.log(date);
-                      // console.log(dateString);
-                      // setFieldValue("tên thuộc tính", giá trị)
                       setFieldValue("ngayTao", dateString)
-                      // setFieldValue("ngayTao", date)
                     }}
-                    changeOnBlur={handleBlur}
+                    onBlur={handleBlur}
                   />
                 </div>
                 {errors.ngayTao && touched.ngayTao ? (
@@ -281,6 +277,7 @@ const ThemKhoaHoc = () => {
                       }
                       setFieldValue("hinhAnh", event.target.files[0]);
                     }}
+                    onBlur={handleBlur}
                   />
                 </div>
                 {errors.hinhAnh && touched.hinhAnh ? (
