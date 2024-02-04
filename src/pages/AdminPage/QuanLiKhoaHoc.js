@@ -8,6 +8,7 @@ import { renderPageNumbers } from "../../utils/pagination";
 import { useFormik } from "formik";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 import { layDanhSachHocVien } from "../../redux/slice/userSlice";
+import { validationAddCourse } from "../../utils/validation";
 
 const QuanLiKhoaHoc = () => {
   let [page, setPage] = useState(1);
@@ -16,6 +17,9 @@ const QuanLiKhoaHoc = () => {
   let [dshvChoDuyet, setDSHVChoDuyet]= useState([]);
   let [dshvThamGia, setDSHVThamGia]= useState([]);
   const [messageApi, contextHolder] = message.useMessage();
+  const {user} = useSelector((state)=>{
+    return state.userSlice
+   })
   // lay danh sach hoc vien
   const dispatch = useDispatch();
   let {dsHocVien} = useSelector((state)=> state.userSlice)
@@ -23,6 +27,7 @@ const QuanLiKhoaHoc = () => {
     const actionThunk = layDanhSachHocVien();
     dispatch(actionThunk);
   }, []);
+  
   // Lấy danh sách kh phân trang
   let { listCourse } = useSelector((state) => state.courseSlice);
   useEffect(() => {
@@ -120,20 +125,21 @@ let layDSHocVienKhoaHoc = (data)=>{
   // Phân trang
   const totalPages = listCourse.totalPages;
   let phanTrang = renderPageNumbers(page, totalPages, setPage);
+  let ngayHienTai = new Date();
   // formik
   const formik = useFormik({
     initialValues: {
       maKhoaHoc: "",
-      biDanh: "1",
+      biDanh: "",
       tenKhoaHoc: "",
       maDanhMucKhoaHoc: "",
-      ngayTao: "",
+      ngayTao: ngayHienTai.toLocaleDateString(),
       danhGia: "",
       luotXem: "",
       maNhom: "",
       hinhAnh: "",
       moTa: "",
-      taiKhoanNguoiTao: "",
+      taiKhoanNguoiTao: user,
     },
     onSubmit: (values) => {
       console.log(values);
@@ -153,7 +159,7 @@ let layDSHocVienKhoaHoc = (data)=>{
           });
         });
     },
-    // validationSchema: validationRegister,
+    validationSchema: validationAddCourse,
   });
   const {
     handleChange,
@@ -453,6 +459,34 @@ let layDSHocVienKhoaHoc = (data)=>{
                                 {errors.maKhoaHoc && touched.maKhoaHoc ? (
                                   <p className="text-danger mt-1">
                                     {errors.maKhoaHoc}
+                                  </p>
+                                ) : (
+                                  ""
+                                )}
+                                 {/* Bí danh */}
+                                 <div className="input-group mb-3">
+                                  <span
+                                    className="input-group-text"
+                                    id="helpId"
+                                  >
+                                    <i class="fa-solid fa-code"></i>
+                                  </span>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Bí danh"
+                                    aria-label="Bí danh"
+                                    aria-describedby="helpId"
+                                    name="biDanh"
+                                    id="biDanh"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.biDanh}
+                                  />
+                                </div>
+                                {errors.biDanh && touched.biDanh ? (
+                                  <p className="text-danger mt-1">
+                                    {errors.biDanh}
                                   </p>
                                 ) : (
                                   ""

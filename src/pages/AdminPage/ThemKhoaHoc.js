@@ -25,7 +25,7 @@ const ThemKhoaHoc = () => {
     const formik = useFormik({
       initialValues: {
         maKhoaHoc: "",
-        biDanh: "1",
+        biDanh: "",
         tenKhoaHoc: "",
         maDanhMucKhoaHoc: "",
         ngayTao: "",

@@ -8,7 +8,6 @@ import { validationRegister } from "../../utils/validation";
 import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 const ThemNguoiDung = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const navigate = useNavigate();
   const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
     useFormik({
       initialValues: {
@@ -18,13 +17,12 @@ const ThemNguoiDung = () => {
         soDT: "",
         maNhom: "",
         hoTen: "",
+        maLoaiNguoiDung:""
       },
       onSubmit: (values) => {
-        console.log(values);
         quanLiNguoiDungServ
           .register(values)
           .then((result) => {
-            console.log(result);
             messageApi.open({
               type: "success",
               content: "Thêm người dùng thành công",

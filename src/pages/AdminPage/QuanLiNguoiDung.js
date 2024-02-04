@@ -3,7 +3,7 @@ import { quanLiNguoiDungServ } from "../../services/quanLiNguoiDungServ";
 import Pagination from "react-bootstrap/Pagination";
 import { message } from "antd";
 import { useFormik } from "formik";
-import { validationUpdate } from "../../utils/validation";
+import { validationEditUser } from "../../utils/validation";
 import { quanLiKhoaHocServ } from "../../services/quanLiKhoaHocServ";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserApi } from "../../redux/slice/userSlice";
@@ -166,7 +166,7 @@ const QuanLiNguoiDung = () => {
       console.log(values);
       capNhatThongTinNguoiDung(values);
     },
-    // validationSchema: validationUpdate
+    validationSchema: validationEditUser
   });
   return (
     <>
