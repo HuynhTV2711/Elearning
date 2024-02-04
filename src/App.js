@@ -8,13 +8,11 @@ import Login from "./pages/LoginPage/Login";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import Page404 from "./pages/404Page/Page404";
 import AdminTemplate from "./templates/adminTemplate/AdminTemplate";
-import Tabs from "./templates/adminTemplate/Tabs";
-import QuanLiNguoiDung from "./templates/adminTemplate/QuanLiNguoiDung";
-import QuanLiKhoaHoc from "./templates/adminTemplate/QuanLiKhoaHoc";
 import ThongTinCaNhan from './pages/ThongTinCaNhan/ThongTinCaNhan';
-import ThemNguoiDung from './templates/adminTemplate/ThemNguoiDung';
-import ThemKhoaHoc from './templates/adminTemplate/ThemKhoaHoc';
-
+import QuanLiNguoiDung from './pages/AdminPage/QuanLiNguoiDung';
+import QuanLiKhoaHoc from './pages/AdminPage/QuanLiKhoaHoc';
+import ThemNguoiDung from './pages/AdminPage/ThemNguoiDung';
+import ThemKhoaHoc from './pages/AdminPage/ThemKhoaHoc';
 function App() {
   return (
     <>

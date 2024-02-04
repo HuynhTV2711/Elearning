@@ -1,5 +1,5 @@
 import React from "react";
-import * as registerAnimation from "./../../assets/animation/addperson.json";
+import * as registerAnimation from "../../assets/animation/addperson.json";
 import Lottie from "react-lottie";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";

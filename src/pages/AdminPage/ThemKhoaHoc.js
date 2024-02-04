@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as registerAnimation from "./../../assets/animation/addcourse.json";
+import * as registerAnimation from "../../assets/animation/addcourse.json";
 import Lottie from "react-lottie";
 import { DatePicker, message } from "antd";
 import { useFormik } from "formik";
