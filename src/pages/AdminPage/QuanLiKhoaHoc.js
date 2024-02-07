@@ -142,7 +142,7 @@ let layDSHocVienKhoaHoc = (data)=>{
       taiKhoanNguoiTao: user,
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       quanLiKhoaHocServ
         .capNhatKhoaHoc(values)
         .then((result) => {
@@ -153,9 +153,10 @@ let layDSHocVienKhoaHoc = (data)=>{
           setIsDelete(!isDelete);
         })
         .catch((err) => {
+          console.log(err);
           messageApi.open({
             type: "error",
-            content: "Thất bại vui lòng thử lại",
+            content: err.response.data,
           });
         });
     },
@@ -449,6 +450,7 @@ let layDSHocVienKhoaHoc = (data)=>{
                                     placeholder="Mã khóa học"
                                     aria-label="Mã khóa học"
                                     aria-describedby="helpId"
+                                    disabled
                                     name="maKhoaHoc"
                                     id="maKhoaHoc"
                                     onChange={handleChange}

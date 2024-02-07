@@ -15,8 +15,8 @@ const Page404 = () => {
   };
   return (
     <div>
-        <Lottie options={defaultOptions} height={400} width={400} />
-        <a onClick={() => { navigate(`/`) }}>Về trang chủ</a>
+        
+        <a onClick={() => { navigate(`/`) }}><Lottie options={defaultOptions} height={800} width={800} /></a>
     </div>
   )
 }
