@@ -31,11 +31,11 @@ const Login = () => {
         matKhau: "",
       },
       onSubmit: (values) => {
-        console.log(values);
+        // console.log(values);
         quanLiNguoiDungServ
           .login(values)
           .then((result) => {
-            console.log(result);
+            // console.log(result);
             messageApi.open({
               type: "success",
               content: "Đăng nhập thành công",
@@ -47,7 +47,7 @@ const Login = () => {
             }, 2000);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             messageApi.open({
               type: "error",
               content: err.response.data,

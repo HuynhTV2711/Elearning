@@ -86,7 +86,7 @@ const QuanLiNguoiDung = () => {
     quanLiKhoaHocServ
       .danhSachKhoaHocChoXetDuyet(data)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setDSKHChoDuyet(result.data);
       })
       .catch((err) => {

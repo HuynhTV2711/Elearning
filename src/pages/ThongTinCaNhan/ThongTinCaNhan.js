@@ -14,7 +14,6 @@ const ThongTinCaNhan = () => {
         quanLiNguoiDungServ
             .thongTinNguoiDung()
             .then((result) => {
-                console.log(result);
                 setThongTinCaNhan(result.data)
             }).catch((err) => {
                 console.log(err);
@@ -34,7 +33,7 @@ const ThongTinCaNhan = () => {
         quanLiKhoaHocServ
         .huyGhiDanh(data)
         .then((result) => {
-            console.log(result);
+            // console.log(result);
             messageApi.open({
                 type: "success",
                 content: result.data,
@@ -63,7 +62,6 @@ const ThongTinCaNhan = () => {
                 soDT: ""
             },
             onSubmit: (values) => {
-                console.log(values);
                 values.taiKhoan = thongTinCaNhan.taiKhoan;
                 values.maLoaiNguoiDung = thongTinCaNhan.maLoaiNguoiDung;
                 values.maNhom = thongTinCaNhan.maNhom;
@@ -161,7 +159,7 @@ const ThongTinCaNhan = () => {
                                             <div class="mb-3">
                                                 <label for="" class="form-label">Mật khẩu</label>
                                                 <input
-                                                    type="text"
+                                                    type="password"
                                                     class="form-control"
                                                     name="matKhau"
                                                     id="matKhau"

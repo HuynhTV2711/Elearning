@@ -9,10 +9,8 @@ const KhoaHocTheoDanhMuc = () => {
     let param = useParams();
     const [khoaHocTheoDanhMuc, setKhoaHocTheoDanhMuc] = useState([]);
     useEffect(()=>{
-        console.log(1);
         quanLiKhoaHocServ.layKhoaHocTheoDanhMuc(param.maDanhMuc)
         .then((result) => {
-            console.log(result);
             setKhoaHocTheoDanhMuc(result.data)
         }).catch((err) => {
             console.log(err);

@@ -68,7 +68,7 @@ let layDSHocVienChoXetDuyet = (data)=>{
   quanLiNguoiDungServ
   .layDanhSachHocVienChoXetDuyet(data)
   .then((result) => {
-    console.log(result);
+    // console.log(result);
     setDSHVChoDuyet(result.data)
   }).catch((err) => {
     console.log(err);
@@ -207,7 +207,7 @@ let layDSHocVienKhoaHoc = (data)=>{
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                       onClick={()=>{
-                        console.log(item.maKhoaHoc);
+                        // console.log(item.maKhoaHoc);
                         layDSHocVienChoXetDuyet(valueKhoaHoc(item.maKhoaHoc))
                         layDSHocVienKhoaHoc(valueKhoaHoc(item.maKhoaHoc))
                         setKhoaHoc(item.maKhoaHoc)

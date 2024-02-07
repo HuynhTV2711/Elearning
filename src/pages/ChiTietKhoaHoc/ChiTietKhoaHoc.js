@@ -9,7 +9,7 @@ const ChiTietKhoaHoc = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [chiTietKhoaHoc, setChiTietKhoaHoc] = useState({});
   const params = useParams();
-  console.log(params.maKhoaHoc);
+  // console.log(params.maKhoaHoc);
   let data = {
     maKhoaHoc: params.maKhoaHoc,
     taiKhoan: getLocal("user_infor").taiKhoan,
@@ -36,7 +36,7 @@ const ChiTietKhoaHoc = () => {
     quanLiKhoaHocServ
       .layThongTinKhoaHoc(params.maKhoaHoc)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setChiTietKhoaHoc(result.data);
       })
       .catch((err) => {
