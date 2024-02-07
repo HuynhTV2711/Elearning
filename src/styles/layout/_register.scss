@@ -16,6 +16,7 @@
         background-color: $accent_color;
         border-radius: 5px;
         text-decoration: none;
+        border: none;
         @include textStyle($fs_18, $fw_500 , $secondary_color);
     }
     .register_btn:hover{
