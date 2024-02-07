@@ -9,7 +9,7 @@ const DanhSachKhoaHoc = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   let { listCourse } = useSelector((state) => state.courseSlice);
-  console.log(listCourse);
+  // console.log(listCourse);
   const dispatch = useDispatch();
   useEffect(() => {
     const actionThunk = getAllCourseApi(page);

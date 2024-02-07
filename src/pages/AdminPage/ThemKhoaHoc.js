@@ -37,10 +37,10 @@ const ThemKhoaHoc = () => {
         taiKhoanNguoiTao: user.taiKhoan
       },
       onSubmit: (values) => {
-        console.log(values);
+        // console.log(values);
         const formData = new FormData();
       for (const key in values) { 
-        console.log(values[key]);
+        // console.log(values[key]);
           formData.append(key, values[key])
       }
       quanLiKhoaHocServ

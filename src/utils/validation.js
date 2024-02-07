@@ -46,7 +46,6 @@ export const validationEditUser = Yup.object({
 });
 export const validationAddCourse = Yup.object({
   maKhoaHoc: Yup.string().required("Vui lòng không bỏ trống"),
-  biDanh: Yup.string().required("Vui lòng không bỏ trống"),
   tenKhoaHoc: Yup.string().required("Vui lòng không bỏ trống"),
   maDanhMucKhoaHoc: Yup.string().required("Vui lòng không bỏ trống"),
   maNhom: Yup.string().required("Vui lòng chọn mã nhóm"),
