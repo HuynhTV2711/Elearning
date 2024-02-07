@@ -21,11 +21,9 @@ const RegisterPage = () => {
         hoTen: "",
       },
       onSubmit: (values) => {
-        console.log(values);
         quanLiNguoiDungServ
           .register(values)
           .then((result) => {
-            console.log(result);
             messageApi.open({
               type: "success",
               content: "Đăng ký thành công",

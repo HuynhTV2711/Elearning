@@ -29,7 +29,7 @@ export const validationRegister = Yup.object({
     ),
   maNhom: Yup.string().required("Vui lòng chọn mã nhóm"),
   hoTen: Yup.string().required("Vui lòng không bỏ trống"),
-  maLoaiNguoiDung: Yup.string().required("Vui lòng không bỏ trống"),
+  // maLoaiNguoiDung: Yup.string().required("Vui lòng không bỏ trống"),
 });
 
 export const validationEditUser = Yup.object({
