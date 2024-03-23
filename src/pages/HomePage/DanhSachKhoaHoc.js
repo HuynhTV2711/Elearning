@@ -16,7 +16,7 @@ const DanhSachKhoaHoc = () => {
     dispatch(actionThunk);
   }, [page]);
   const totalPages = listCourse.totalPages;
-  let phanTrang = renderPageNumbers(page, totalPages, setPage)
+  let phanTrang = renderPageNumbers(page, totalPages, setPage);
   return (
     <div className="danh_sach_khoa_hoc" id="dskh">
       <div className="container">
@@ -49,7 +49,7 @@ const DanhSachKhoaHoc = () => {
                           navigate(`/chiTietKhoaHoc/${item.maKhoaHoc}`);
                         }}
                       >
-                        Chi tiết
+                        Xem
                       </a>
                     </div>
                   </div>
@@ -59,7 +59,7 @@ const DanhSachKhoaHoc = () => {
           })}
         </div>
         <div className="d-flex justify-content-end mt-4">
-        <Pagination>
+          <Pagination>
             <Pagination.First
               onClick={() => setPage(1)}
               disabled={page === 1}
